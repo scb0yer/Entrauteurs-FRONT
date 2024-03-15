@@ -30,6 +30,8 @@
 
 .adminpage .containers {
   flex: 1;
+  gap: 20px;
+  display: flex;
   overflow-x: scroll;
 }
 .adminpage .writer {
