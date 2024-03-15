@@ -110,12 +110,9 @@ export default function Signup({
         const userToken = data.token;
         Cookies.set("token", userToken, { expires: 30 }, { secure: true });
         setToken(userToken);
-        const writerId = data.writer._id;
+        const writerId = data._id;
         Cookies.set("writerId", writerId, { expires: 30 }, { secure: true });
         setWriterId(writerId);
-        const storiesRead = JSON.stringify(data.writer.stories_read);
-        Cookies.set("storiesRead", storiesRead, { expires: 7 });
-        setStoriesRead(storiesRead);
         setNewStateHP(!newStateHP);
         setDisplaySignup(false);
       } else {
