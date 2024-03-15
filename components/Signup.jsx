@@ -158,7 +158,7 @@ export default function Signup({
             <label>
               Email :
               <input
-                type="text"
+                type="email"
                 value={email}
                 placeholder="email"
                 onChange={(event) => {

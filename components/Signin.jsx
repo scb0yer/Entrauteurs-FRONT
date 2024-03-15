@@ -72,7 +72,7 @@ export default function Signin({
           <label>
             Email :
             <input
-              type="text"
+              type="email"
               value={email}
               placeholder="email"
               onChange={(event) => {

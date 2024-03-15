@@ -955,6 +955,7 @@ export default function ProfilPage({
                         }, 3500);
                       } else {
                         setDisplayStoryUpdate(true);
+                        setChange(!change);
                       }
                     }}
                   >

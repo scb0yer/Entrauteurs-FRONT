@@ -116,7 +116,6 @@ export default function StoryPage({
                 story_cover={story.story_details.story_cover}
                 story_title={story.story_details.story_title}
                 story_url={story.story_details.story_url}
-                story_id={story._id}
                 size={300}
               />
             </div>
