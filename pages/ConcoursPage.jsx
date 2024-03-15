@@ -95,8 +95,8 @@ export default function ConcoursPage() {
       <h2>Liste des participants inscrits pour la prochaine session.</h2>
       <br />
       <p>
-        La session commencera début mai. Les inscriptions ouvriront fin
-        mars/début avril. Rejoins le Discord pour ne manquer aucune info !
+        La session aura lieu du 5 mai au 23 juin. Les inscriptions sont
+        ouvertes.
       </p>
       <br />
       <div className="authorsContainer">

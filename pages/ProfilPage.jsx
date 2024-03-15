@@ -31,6 +31,7 @@ export default function ProfilPage({
   isAdmin,
   setDisplayContestation,
   setStory_review,
+  setIsAdmin,
 }) {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
@@ -1188,6 +1189,7 @@ export default function ProfilPage({
             onClick={() => {
               setToken(null);
               setStoriesRead(null);
+              setIsAdmin(false);
             }}
           >
             Se Déconnecter

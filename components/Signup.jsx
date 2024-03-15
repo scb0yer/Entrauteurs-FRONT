@@ -423,7 +423,7 @@ export default function Signup({
           </div>
         </div>
 
-        <MyDropzone className="dropzone" />
+        {/* <MyDropzone className="dropzone" /> */}
         <button
           onClick={() => {
             signup();

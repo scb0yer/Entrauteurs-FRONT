@@ -205,8 +205,8 @@ export default function HomePage({
                               {writer.writer_details.username.slice(0, 1)}
                             </div>
                             <span>
-                              {writer.writer_details.username.slice(1, 15)}
-                              {writer.writer_details.username.slice(16) &&
+                              {writer.writer_details.username.slice(1, 13)}
+                              {writer.writer_details.username.slice(13) &&
                                 "..."}
                             </span>
                           </div>
@@ -217,8 +217,8 @@ export default function HomePage({
                                   {writer.writer_details.discord.slice(0, 1)}
                                 </div>
                                 <span>
-                                  {writer.writer_details.discord.slice(1, 15)}
-                                  {writer.writer_details.discord.slice(16) &&
+                                  {writer.writer_details.discord.slice(1, 13)}
+                                  {writer.writer_details.discord.slice(13) &&
                                     "..."}
                                 </span>
                               </>

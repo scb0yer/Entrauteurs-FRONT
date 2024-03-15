@@ -143,6 +143,7 @@ function App() {
               isInExchange={isInExchange}
               setIsInExchange={setIsInExchange}
               isAdmin={isAdmin}
+              setIsAdmin={setIsAdmin}
               setStory_review={setStory_review}
             />
           }

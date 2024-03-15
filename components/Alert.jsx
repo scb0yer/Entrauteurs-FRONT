@@ -7,7 +7,7 @@ export default function AlertDisplay({ warning }) {
     );
     setTimeout(() => {
       setGif(null);
-    }, 2990);
+    }, 2980);
   }, [warning]);
   return (
     <div className="alert">
