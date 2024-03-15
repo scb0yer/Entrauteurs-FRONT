@@ -1,0 +1,36 @@
+.progress-display {
+  position: relative;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: hidden;
+}
+.progress-display .bars {
+  position: absolute;
+  bottom: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow-y: scroll;
+  overflow-y: hide;
+}
+.progress-display .progress-bar-days {
+  background-color: rgb(61, 61, 61);
+  border: 1px solid rgba(38, 38, 38, 0.9);
+  /* width: 25px; */
+}
+
+.progress-display .target {
+  position: absolute;
+  bottom: 20px;
+  height: 200px;
+  width: 75vw;
+  border-top: 1px dashed #c2830e;
+}
+
+.display-selector {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}

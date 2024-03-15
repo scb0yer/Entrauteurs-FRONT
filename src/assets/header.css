@@ -1,0 +1,57 @@
+header {
+  width: 100vw;
+  display: flex;
+  position: fixed;
+  top: -40px;
+  align-items: center;
+  font-size: 20px;
+  max-width: 1200px;
+}
+header .relative {
+  position: relative;
+}
+header .btn {
+  background-color: #1c2230;
+  z-index: 3;
+}
+header .absolute {
+  position: absolute;
+  background-color: #1c2230;
+  height: 150px;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  z-index: 3;
+  border-bottom: 1px white solid;
+}
+
+header .navigation {
+  position: absolute;
+  top: 90px;
+  left: 30vw;
+  width: 70vw;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+header .navigation a {
+  border: 1px solid white;
+  padding: 15px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: 0.5s;
+}
+header .navigation a:hover {
+  background-color: white;
+  color: #1c2230;
+}
+header img {
+  width: 200px;
+}
+header .logo {
+  z-index: 5;
+  position: absolute;
+  top: 10px;
+  left: 10vw;
+}

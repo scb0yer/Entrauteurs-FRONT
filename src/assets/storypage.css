@@ -1,0 +1,101 @@
+.storypage .bloc1 {
+  margin: auto;
+  width: 70vw;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 20px;
+}
+
+.storypage .description {
+  margin: auto;
+  margin-top: 20px;
+  width: 70vw;
+  max-width: 1200px;
+  border: 1px white solid;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: justify;
+}
+.storypage .readers {
+  margin: auto;
+  margin-top: 20px;
+  width: 70vw;
+  max-width: 1200px;
+  border: 1px white solid;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: justify;
+}
+
+.storypage .bloc1 > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.details > div {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.storypage .cover {
+  width: 100%;
+  object-fit: contain;
+  border: 1px white solid;
+}
+
+.storypage .logo {
+  width: 30px;
+  height: 30px;
+}
+
+.storypage .rate {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  margin-top: 10px;
+}
+
+.storypage .note {
+  font-size: 15px;
+  color: rgb(79, 79, 79);
+}
+
+.storypage .reviews {
+  margin: auto;
+  margin-top: 20px;
+  width: 70vw;
+  max-width: 1200px;
+  border: 1px white solid;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.storypage .reviews .review {
+  width: 100%;
+  display: flex;
+  padding: 10px;
+  height: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border: 1px white dashed;
+  gap: 10px;
+}
+
+.storypage .reviews .review > div {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  justify-content: flex-start;
+  text-align: justify;
+}
+
+.storypage .reviews .review > div > div:first-child {
+  width: 200px;
+}
+
+.storypage .reviews .review .comment {
+  width: 100%;
+}

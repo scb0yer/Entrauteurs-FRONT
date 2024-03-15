@@ -1,0 +1,44 @@
+.modal {
+  position: fixed;
+  top: 0;
+  z-index: 3;
+  width: 100vw;
+  height: 100vh;
+  margin: auto;
+  background-color: #1f2231b4;
+}
+
+.review {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: 90vh;
+  margin: auto;
+  margin-top: 5vh;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 1px solid white;
+  border-radius: 10px;
+  background-color: #1f2231;
+}
+
+.review form {
+  width: 75vw;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 20px;
+}
+.review form div > div:last-child {
+  display: flex;
+  justify-content: space-evenly;
+}
+.review form textarea {
+  width: 50vw;
+  height: 9vh;
+}
+.review form div > div:first-child {
+  font-weight: 700;
+  font-size: large;
+}

@@ -1,0 +1,82 @@
+.modal {
+  position: fixed;
+  top: 0;
+  z-index: 3;
+  width: 100vw;
+  height: 100vh;
+  margin: auto;
+  background-color: #1f2231b4;
+}
+
+.sign {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: 90vh;
+  margin: auto;
+  margin-top: 5vh;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 1px solid white;
+  border-radius: 10px;
+  background-color: #1f2231;
+}
+
+.sign > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.signin {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: 50vh;
+  margin: auto;
+  margin-top: 25vh;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 1px solid white;
+  border-radius: 10px;
+  background-color: #1f2231;
+}
+
+.signin > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.dropzone {
+  border: 1px dashed white;
+  width: 90%;
+  padding: 10px;
+  border-radius: 5px;
+}
+.modal .sign .columns {
+  display: flex;
+  width: 70vw;
+  gap: 20px;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.modal .sign .columns > div {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal .sign .columns > div input {
+  width: 100%;
+}
+.modal .sign .columns > div .year {
+  width: 100px;
+}
+.modal .sign .columns > div textarea {
+  width: 100%;
+}

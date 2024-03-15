@@ -1,0 +1,148 @@
+.homePage .quote {
+  font-family: "Homemade Apple", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  text-align: center;
+}
+.homePage .description {
+  margin-top: 25px;
+  border: 1px dashed white;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: justify;
+  font-size: 19px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-end;
+}
+
+.homePage .first-bloc {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10%;
+  margin-top: 20px;
+}
+
+.homePage .first-bloc .left-col {
+  width: 70%;
+  max-width: 900px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+}
+.homePage .containerWithAngles {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.homePage .containerWithAngles > div:first-child {
+  width: 15%;
+}
+.homePage.containerWithAngles > div:last-child {
+  width: 15%;
+}
+.homePage .first-bloc .left-col .storyContainer-3 {
+  max-width: 700px;
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  gap: 5%;
+}
+
+.homePage .first-bloc .left-col .storyContainer-3 > div {
+  position: relative;
+}
+.homePage div .bookmark {
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  z-index: 1;
+}
+.homePage div .absolute {
+  position: absolute;
+  bottom: 50px;
+  height: 110px;
+  width: 100%;
+  background-color: #1f2231bd;
+  padding: 5px;
+  margin: 1px;
+  border: 1px solid white;
+  border-radius: 10px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  font-size: 15px;
+}
+.homePage .first-bloc .left-col .storyContainer-3 > div .rate {
+  display: flex;
+  gap: 5px;
+}
+
+.homePage .first-bloc .right-col {
+  width: 30%;
+  max-width: 400px;
+  padding: 5px;
+  border: 1px dashed white;
+  border-radius: 10px;
+}
+
+.homePage .first-bloc .right-col h3 {
+  height: 70px;
+  text-align: center;
+}
+
+.homePage .first-bloc .right-col > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 10px;
+  max-height: 280px;
+  overflow-y: hidden;
+}
+
+.homePage .first-bloc .right-col .autorName {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.homePage .first-bloc .right-col .autorName > div {
+  display: flex;
+  width: 100%;
+}
+
+.homePage .first-bloc .right-col .autorName .wattpad {
+  background-color: #fd5722;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  text-align: right;
+}
+.homePage .first-bloc .right-col .autorName .discord {
+  background-color: #5f70be;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  text-align: right;
+}
+.homePage .note {
+  font-size: 13px;
+  color: rgb(79, 79, 79);
+}
+.homePage .recentlyAdded {
+  padding-top: 10px;
+  border-top: 1px white solid;
+  margin-top: 20px;
+}
+.homePage .storyContainer-4 {
+  width: 100%;
+  display: flex;
+  gap: 2%;
+  margin-bottom: 30px;
+}

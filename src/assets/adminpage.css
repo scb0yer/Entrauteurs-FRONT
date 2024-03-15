@@ -1,0 +1,219 @@
+.adminpage .bloc1 {
+  display: flex;
+}
+
+.adminpage .bloc1 .left-col {
+  width: 300px;
+  height: 350px;
+  border: 1px white solid;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+}
+
+.adminpage .bloc1 .right-col {
+  flex: 1;
+  gap: 30px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.adminpage .explication {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.adminpage .containers {
+  flex: 1;
+  overflow-x: scroll;
+}
+.adminpage .writer {
+  border: 1px white dashed;
+  padding: 5px;
+  height: 40px;
+  width: 250px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.adminpage .writer > a {
+  border: 1px white solid;
+  border-radius: 25px;
+  height: 35px;
+  width: 200px;
+  font-family: "Mansalva", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 21px;
+  padding: 6px;
+  text-align: center;
+  transition: 0.5;
+}
+.adminpage .writer > a:hover {
+  color: #1f2231;
+  background-color: white;
+}
+
+.adminpage .writer > div:last-child {
+  padding: 4px;
+  border: 1px white solid;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  text-align: center;
+  transition: 0.5;
+}
+
+.adminpage .writer > div:last-child:hover {
+  background-color: #055d28;
+}
+
+.adminpage .book {
+  padding: 5px;
+  height: 210px;
+  width: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.adminpage .book div:last-child {
+  padding: 4px;
+  border: 1px white solid;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  text-align: center;
+  transition: 0.5;
+}
+
+.adminpage .book > div:last-child:hover {
+  background-color: #055d28;
+}
+
+.adminpage .bloc2 {
+  border-top: 1px solid white;
+  margin-top: 20px;
+  width: 100%;
+}
+.adminpage .bloc2 .writer2 {
+  font-family: "Mansalva", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 19px;
+}
+.adminpage .bloc2 .bookContainer {
+  width: 100%;
+  display: flex;
+  gap: 30px;
+  overflow-x: scroll;
+}
+.adminpage .bloc2 .bookContainerWrap {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-height: 500px;
+  overflow-y: scroll;
+}
+.adminpage .bloc2 .book2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 200px;
+  height: 250px;
+}
+.adminpage .bloc2 .icons {
+  display: flex;
+  gap: 10px;
+}
+
+.adminpage .bloc2 .exchange-datas {
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px dashed white;
+}
+
+.adminpage .bloc2 .exchange-datas > div:first-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.adminpage .bloc2 .contestationDisplay {
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  height: 180px;
+  justify-content: space-between;
+  overflow-y: scroll;
+  border: 1px white dashed;
+}
+
+.adminpage .bloc2 .contestationDisplay > div:first-child {
+  width: 100px;
+}
+
+.adminpage .bloc2 .review_details {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  flex: 1;
+}
+.adminpage .bloc2 .review_details > div {
+  width: 20%;
+}
+
+.adminpage .bloc2 .contestation_details {
+  display: flex;
+  width: 300px;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.adminpage .bloc2 .contestation_details .btn-contestation {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.contestation_details .btn-contestation .validate-review:hover {
+  background-color: #055d28;
+  color: white;
+}
+.contestation_details .btn-contestation .cancel-review:hover {
+  background-color: #991313;
+  color: white;
+}
+.contestation_details .btn-contestation .pending-contestation:hover {
+  background-color: #bc8400;
+  color: white;
+}
+
+.adminpage .bloc2 .icon {
+  padding: 4px;
+  border: 1px white solid;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  text-align: center;
+  transition: 0.5;
+}
+
+.adminpage .bloc2 .to-validate:hover {
+  background-color: #055d28;
+}
+.adminpage .bloc2 .to-inactive:hover {
+  background-color: #bc8400;
+}
+.adminpage .bloc2 .to-dissmiss:hover {
+  background-color: #991313;
+}

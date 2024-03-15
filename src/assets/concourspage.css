@@ -1,0 +1,38 @@
+.concoursPage .authorsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 10px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.concoursPage .authorsContainer > div {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  width: 210px;
+  height: 290px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.concoursPage .authorsContainer .username {
+  font-family: "Mansalva", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  border-bottom: 1px white solid;
+}
+
+.concoursPage .explications {
+  font-weight: 200;
+  padding: 20px;
+  text-align: justify;
+  font-size: 21px;
+  line-height: 26px;
+  margin-bottom: 30px;
+  border: 1px white solid;
+  border-radius: 15px;
+}

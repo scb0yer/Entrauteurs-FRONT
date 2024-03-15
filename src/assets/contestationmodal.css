@@ -1,0 +1,40 @@
+.modal {
+  position: fixed;
+  top: 0;
+  z-index: 3;
+  width: 100vw;
+  height: 100vh;
+  margin: auto;
+  background-color: #1f2231b4;
+}
+
+.contestation {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: 90vh;
+  margin: auto;
+  margin-top: 5vh;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 1px solid white;
+  border-radius: 10px;
+  background-color: #1f2231;
+}
+
+.contestation form {
+  display: flex;
+  flex-direction: column;
+  height: 60vh;
+  justify-content: space-evenly;
+  width: 60vw;
+}
+
+.contestation form input:first-child {
+  width: 100%;
+}
+
+.contestation form textarea {
+  width: 100%;
+  height: 150px;
+}

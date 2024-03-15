@@ -1,0 +1,133 @@
+.footer {
+  margin-top: 40px;
+  width: 100vw;
+  padding-bottom: 50px;
+  padding-top: 50px;
+  border-top: 1px rgba(255, 255, 255, 0.5) solid;
+  background-color: rgb(32, 32, 32);
+}
+.footer > h2 {
+  text-align: center;
+}
+
+.footer .container {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 5%;
+}
+.footer .network {
+  height: 50px;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.footer .contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex: 1;
+}
+.footer .contact > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.footer .contact > div:last-child {
+  padding-top: 10px;
+}
+.footer .contact > div > label {
+  padding-right: 20px;
+}
+.footer .contact input,
+.footer .contact textarea {
+  width: 100%;
+}
+.footer .contact textarea {
+  height: 150px;
+}
+
+.footer .message {
+  height: 100px;
+  vertical-align: top;
+}
+.footer .rightColumn {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.footer .rightColumn > div:first-child {
+  display: flex;
+  flex-direction: row;
+  gap: 25%;
+}
+.footer .DiscordButton {
+  height: 65px;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.footer .submit,
+.footer button {
+  color: white;
+  border-radius: 50px;
+  text-align: center;
+  background-color: rgb(32, 32, 32);
+  border: 1px solid white;
+  padding: 5px;
+  width: 250px;
+  height: 25px;
+  transition: 0.5s;
+  font-size: 13px;
+  text-align: center;
+}
+.footer .submit:hover,
+.footer button:hover {
+  background-color: white;
+  color: rgb(32, 32, 32);
+}
+.footer .réglementation {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer #close {
+  position: fixed;
+  right: 7vw;
+}
+
+.footer .hidden {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .footer .container {
+    flex-direction: column;
+    justify-content: space-around;
+    width: 80%;
+    gap: 30px;
+  }
+  .footer .contact {
+    align-items: center;
+  }
+  .footer .rightColumn {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 750px) {
+  .footer .container .contact input,
+  .footer .container .contact textarea {
+    width: 90vw;
+  }
+  .footer .container .contact .submit {
+    width: 100px;
+  }
+}

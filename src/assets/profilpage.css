@@ -1,0 +1,276 @@
+.profil {
+  position: relative;
+  border: 1px solid white;
+}
+
+.profil .subscription {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.profil .btn-save {
+  width: 150px;
+  height: 35px;
+}
+.profil .change-alert {
+  text-align: center;
+  background-color: #84230b;
+  color: white;
+  padding: 5px 1px 5px 1px;
+  border: 1px black solid;
+  border-radius: 50px;
+  width: 90%;
+  margin-left: 5%;
+}
+.discord-name {
+  font-family: "Mansalva", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 21px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
+}
+
+.discord-input {
+  font-family: "Mansalva", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 21px;
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
+  border: none;
+  text-align: center;
+  width: 60%;
+}
+
+.wattpad-name {
+  font-weight: 700;
+  font-style: normal;
+  font-size: 21px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
+}
+.wattpad-name > div {
+  width: 60%;
+}
+.profil .readingList {
+  width: 100%;
+  max-height: 540px;
+  overflow-y: scroll;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 10px;
+}
+.profil .review-details {
+  height: 250px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: scroll;
+}
+.profil .review-details > div > div {
+  display: flex;
+  justify-content: space-between;
+  border: 1px white dashed;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.profil .review-details .global {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.profil .name {
+  width: 30%;
+  background-color: rgba(0, 0, 0, 0.8);
+  margin: auto;
+  position: absolute;
+  left: 35%;
+  bottom: 3px;
+  text-align: center;
+  padding: 5px;
+  border-top: 1px black solid;
+  border-left: 1px black solid;
+  border-right: 1px black solid;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.profil .admin {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.profil .admin > button {
+  width: 200px;
+}
+.profil .book {
+  width: 150px;
+  border: 1px white solid;
+}
+.profil .vote {
+  display: flex;
+  justify-content: space-evenly;
+  height: 270px;
+  overflow-y: scroll;
+}
+.profil .vote .book {
+  width: 200px;
+  border: 1px white solid;
+}
+.profil .vote > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profil .storyDetails_right {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.profil .storyDetails {
+  gap: 15px;
+  display: flex;
+}
+.profil .cover {
+  width: 200px;
+}
+.profil .writtenStories {
+  max-height: 450px;
+  overflow-y: scroll;
+}
+.profil .addStory {
+  display: flex;
+  justify-content: space-between;
+}
+.profil .name .min-logo {
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
+}
+.profil .picto-img {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  opacity: 0.7;
+}
+.banner img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-bottom: 1px black solid;
+}
+.profil .banner .dropzone {
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  border: none;
+}
+.banner {
+  position: relative;
+}
+
+.profil .bloc1 {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.profil .bloc1 .column1 {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: scroll;
+}
+
+.profil .infos {
+  height: 340px;
+  overflow-y: scroll;
+}
+.profil .avertissement {
+  text-align: justify;
+  height: 250px;
+  overflow-y: scroll;
+}
+
+.profil .warning {
+  margin-top: 20px;
+}
+.profil .bloc1 .column1 input {
+  width: 100%;
+}
+
+.profil .bloc1 .column2 {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profil .presentation {
+  height: 180px;
+  overflow-y: scroll;
+}
+
+.profil .bloc1 > div > div {
+  border: 1px solid white;
+  border-radius: 10px;
+  margin: 15px;
+  padding: 15px;
+}
+.profil .progression {
+  border: 1px solid white;
+  border-radius: 10px;
+  margin: 15px;
+  padding: 15px;
+}
+
+.profil .progression .settings {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.profil li {
+  margin-bottom: 7px;
+}
+
+.profil .infos .mature {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.profil .infos .mature input {
+  width: 20px;
+}
+
+.profil .bloc1 textarea {
+  width: 100%;
+}
+
+.profil .exchangeStory {
+  display: flex;
+  height: 210px;
+  overflow-y: scroll;
+}
+
+.profil .exchangeStory > div:last-child {
+  flex: 1;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
