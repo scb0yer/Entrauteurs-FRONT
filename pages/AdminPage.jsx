@@ -626,6 +626,7 @@ export default function AdminPage({ token, isAdmin }) {
           {data &&
             data[6] &&
             data[6].echange &&
+            data[6].echange[0] &&
             data[6].echange[0].draw.map((book, index) => {
               console.log("BOOK", book);
               return (
