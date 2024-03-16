@@ -61,9 +61,7 @@ export default function StoryUpdate({
         setTimeout(() => {
           setAlert(false);
         }, 3100);
-      } else if (
-        story_cover.slice(0, 30) !== "https://www.wattpad.com/story/"
-      ) {
+      } else if (story_url.slice(0, 30) !== "https://www.wattpad.com/story/") {
         setWarning(
           `L'adresse de ton livre doit commencer par "https://www.wattpad.com/story/"`
         );

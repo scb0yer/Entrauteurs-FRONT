@@ -4,11 +4,6 @@ import BookImg from "./BookImg";
 export default function Story({ story }) {
   const navigate = useNavigate();
   const [isDisplay, setIsDisplay] = useState(false);
-  const [lines, setLines] = useState([]);
-  useEffect(() => {
-    const description = story.story_details.story_description;
-    const length = story.story_details.story_description.length;
-  }, []);
   return (
     <div
       onMouseOver={() => setIsDisplay(true)}
