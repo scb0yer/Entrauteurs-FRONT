@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BookImg from "./BookImg";
 export default function Story({ story }) {
   const navigate = useNavigate();
   const [isDisplay, setIsDisplay] = useState(false);
+  const [lines, setLines] = useState([]);
+  useEffect(() => {
+    const description = story.story_details.story_description;
+    const length = story.story_details.story_description.length;
+  }, []);
   return (
     <div
       onMouseOver={() => setIsDisplay(true)}
@@ -24,6 +29,8 @@ export default function Story({ story }) {
           }}
           className="absolute"
         >
+          <div className="category">{story.story_details.story_cat}</div>
+          <div></div>
           {story.story_details.story_description.slice(0, 90)}
           {story.story_details.story_description.length > 90 && "..."}
         </div>

@@ -133,6 +133,13 @@ export default function ProfilPage({
               setAlreadyVoted(true);
             }
           }
+          if (data.stories_written) {
+            for (let s = 0; s < data.stories_written.length; s++) {
+              if (data.stories_written[s].book_written.isRegistered === "Yes") {
+                setExchange(true);
+              }
+            }
+          }
           const today = new Date();
           const year2 = today.getFullYear();
           const month2 = today.getMonth();
@@ -296,8 +303,10 @@ export default function ProfilPage({
 
   const registerToSession = async (story_title, story_url, story_cover) => {
     try {
+      console.log("enter");
       setIsLoading(true);
       if (!data.concours_id && !session) {
+        console.log("nouvel auteur");
         const { data } = await axios.post(
           "https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/author/signup",
           { story_title, story_url, story_cover },
@@ -315,6 +324,7 @@ export default function ProfilPage({
         }, 3000);
         setSession(true);
       } else if (!session) {
+        console.log("auteur existant");
         const { data } = await axios.post(
           "https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/author/update",
           { story_title, story_url, story_cover },
@@ -332,6 +342,7 @@ export default function ProfilPage({
         }, 3000);
         setSession(true);
       } else {
+        console.log("auteur existant qui vient d'inscrire sont histoire");
         setIsLoading(false);
         setWarning("Ton histoire est déjà enregistrée pour le concours.");
         setAlert(true);
@@ -340,6 +351,7 @@ export default function ProfilPage({
         }, 3000);
       }
     } catch (error) {
+      console.log("problème");
       console.log(error.message);
       setWarning("Tu ne peux inscrire qu'une seule histoire par concours.");
       setAlert(true);
@@ -355,7 +367,7 @@ export default function ProfilPage({
       setIsLoading(true);
       if (isRegistered === "Yes" || exchange === true) {
         setIsLoading(false);
-        setWarning("Ton histoire est déjà enregistrée pour l'échange.");
+        setWarning("Tu as déjà une histoire d'enregistrée pour l'échange.");
         setAlert(true);
         setTimeout(() => {
           setAlert(false);
@@ -988,36 +1000,57 @@ export default function ProfilPage({
                         />
                         <div className="storyDetails_right">
                           <h3>{book.book_written.story_details.story_title}</h3>
+                          {book.book_written.statusForConcours ===
+                            "Pending" && (
+                            <div>
+                              Histoire inscrite au prochain concours :
+                              inscription en attente de validation
+                            </div>
+                          )}
+                          {book.book_written.statusForConcours ===
+                            "Registered" && (
+                            <div>
+                              Histoire inscrite au prochain concours :
+                              inscription validée
+                            </div>
+                          )}
                           <div>
                             {book.book_written.story_details.story_cat} --{" "}
                             {book.book_written.story_details.story_mature
                               ? "Mature"
                               : "Tout public"}{" "}
+                            {book.book_written.statusForConcours ===
+                              "Active" && (
+                              <div>Histoire inscrite au concours actuel</div>
+                            )}
                             -- {book.book_written.views} vues
                           </div>
 
-                          <div className="rate">
-                            {rating.map((rate, index) => {
-                              if (rate < Math.floor(book.book_written.note)) {
-                                return (
-                                  <FontAwesomeIcon key={index} icon="star" />
-                                );
-                              } else if (
-                                rate === Math.floor(book.book_written.note) &&
-                                half
-                              ) {
-                                return (
-                                  <FontAwesomeIcon
-                                    key={index}
-                                    icon="star-half"
-                                  />
-                                );
-                              }
-                            })}
-                            <span className="note">
-                              {book.book_written.note}/5
-                            </span>
-                          </div>
+                          {book.book_written.note > 0 && (
+                            <div className="rate">
+                              {rating.map((rate, index) => {
+                                if (rate < Math.floor(book.book_written.note)) {
+                                  return (
+                                    <FontAwesomeIcon key={index} icon="star" />
+                                  );
+                                } else if (
+                                  rate === Math.floor(book.book_written.note) &&
+                                  half
+                                ) {
+                                  return (
+                                    <FontAwesomeIcon
+                                      key={index}
+                                      icon="star-half"
+                                    />
+                                  );
+                                }
+                              })}
+                              <span className="note">
+                                {book.book_written.note}/5
+                              </span>
+                            </div>
+                          )}
+
                           <div>Classement au concours</div>
                           <div>
                             {book.book_written.story_details.story_description.slice(
@@ -1055,47 +1088,56 @@ export default function ProfilPage({
                         >
                           Modifier
                         </button>
-                        <button
-                          onClick={() => {
-                            if (data.discord_checked) {
-                              registerToSession(
-                                book.book_written.story_details.story_title,
-                                book.book_written.story_details.story_url,
-                                book.book_written.story_details.story_cover
-                              );
-                            } else {
-                              setWarning(
-                                "Ton compte discord doit être vérifié par un admin pour inscrire ton histoire. Contacte-les sur Discord pour qu'ils valident ton compte."
-                              );
-                              setAlert(true);
-                              setTimeout(() => {
-                                setAlert(false);
-                              }, 3500);
-                            }
-                          }}
-                        >
-                          Inscrire au concours
-                        </button>
-                        <button
-                          onClick={() => {
-                            if (data.discord_checked) {
-                              registerToExchange(
-                                book.book_written._id,
-                                book.book_written.isRegistered
-                              );
-                            } else {
-                              setWarning(
-                                "Ton compte discord doit être vérifié par un admin pour inscrire ton histoire. Contacte-les sur Discord pour qu'ils valident ton compte."
-                              );
-                              setAlert(true);
-                              setTimeout(() => {
-                                setAlert(false);
-                              }, 3500);
-                            }
-                          }}
-                        >
-                          Inscrire à l'échange
-                        </button>
+                        {data.concours_id.status !== "Active" &&
+                          book.book_written.statusForConcours !== "Pending" &&
+                          book.book_written.statusForConcours !==
+                            "Registered" && (
+                            <button
+                              onClick={() => {
+                                if (data.discord_checked) {
+                                  registerToSession(
+                                    book.book_written.story_details.story_title,
+                                    book.book_written.story_details.story_url,
+                                    book.book_written.story_details.story_cover
+                                  );
+                                } else {
+                                  setWarning(
+                                    "Ton compte discord doit être vérifié par un admin pour inscrire ton histoire. Contacte-les sur Discord pour qu'ils valident ton compte."
+                                  );
+                                  setAlert(true);
+                                  setTimeout(() => {
+                                    setAlert(false);
+                                  }, 3500);
+                                }
+                              }}
+                            >
+                              Inscrire au concours
+                            </button>
+                          )}
+                        {!exchange &&
+                          book.book_written.isRegistered === "No" && (
+                            <button
+                              onClick={() => {
+                                if (data.discord_checked) {
+                                  registerToExchange(
+                                    book.book_written._id,
+                                    book.book_written.isRegistered
+                                  );
+                                  setChange(!change);
+                                } else {
+                                  setWarning(
+                                    "Ton compte discord doit être vérifié par un admin pour inscrire ton histoire. Contacte-les sur Discord pour qu'ils valident ton compte."
+                                  );
+                                  setAlert(true);
+                                  setTimeout(() => {
+                                    setAlert(false);
+                                  }, 3500);
+                                }
+                              }}
+                            >
+                              Inscrire à l'échange
+                            </button>
+                          )}
                       </div>
                     </div>
                   );

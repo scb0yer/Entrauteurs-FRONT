@@ -67,14 +67,24 @@
   height: 110px;
   width: 100%;
   background-color: #1f2231bd;
-  padding: 5px;
+  padding: 2px;
   margin: 1px;
   border: 1px solid white;
   border-radius: 10px;
   display: flex;
+  flex-direction: column;
   text-align: center;
   align-items: center;
   font-size: 15px;
+  line-height: 15px;
+  inline-size: 150px;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.homePage div .absolute .category {
+  font-family: "Homemade Apple", cursive;
+  font-weight: 400;
 }
 .homePage .first-bloc .left-col .storyContainer-3 > div .rate {
   display: flex;
@@ -100,7 +110,7 @@
   justify-content: flex-start;
   align-items: flex-end;
   gap: 10px;
-  max-height: 265px;
+  max-height: 280px;
   overflow-y: hidden;
 }
 

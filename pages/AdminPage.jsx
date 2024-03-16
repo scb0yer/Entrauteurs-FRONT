@@ -458,6 +458,10 @@ export default function AdminPage({ token, isAdmin }) {
                 data[2].books.map((book, index) => {
                   return (
                     <div key={index} className="book">
+                      <div>
+                        {book.writer.writer_details.username.slice(0, 12)}
+                        {book.writer.writer_details.username.slice(12) && "..."}
+                      </div>
                       <BookImg
                         story_cover={book.story_details.story_cover}
                         story_title={book.story_details.story_title}
@@ -596,7 +600,7 @@ export default function AdminPage({ token, isAdmin }) {
                 <div
                   key={index}
                   className="book2"
-                  style={{ height: "200px", textAlign: "center" }}
+                  style={{ height: "220px", textAlign: "center" }}
                 >
                   <Link className="writer2">
                     <div>{book.writer.writer_details.username}</div>

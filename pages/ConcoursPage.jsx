@@ -33,6 +33,7 @@ export default function ConcoursPage() {
     <main className="concoursPage">
       <div className="explications">
         <strong>Le principe :</strong> <br />
+        <br />
         <ul>
           <li>
             Chaque participant est à la fois auteur de son histoire et jury de
@@ -57,6 +58,7 @@ export default function ConcoursPage() {
       </div>
       <div className="explications">
         <strong>Qui peut participer ?</strong> <br />
+        <br />
         <ul>
           <li>
             Ce concours s'adresse aux auteurs <strong>majeurs</strong> qui ont
@@ -83,14 +85,20 @@ export default function ConcoursPage() {
             </ul>
           </li>
         </ul>
-        Après avoir lu le présent règlement, il faut s'inscrire en renseignant
-        la clef "concours" Chaque semaine (dimanche matin, à partir de 10h), les
-        participants découvrent les deux histoires qu'ils doivent lire depuis
-        leur espace. Ils peuvent cliquer sur la couverture de l'image pour être
-        directement redirigés vers le livre sur Wattpad. Toujours depuis leur
-        espace, ils doivent voter pour l'histoire qu'ils ont préférée (en
-        cliquant sur le bouton qui correspond). Ils ont jusqu'au samedi soir
-        pour le faire (avant minuit).
+        <br />
+        Après avoir lu le présent règlement, chaque auteur peut inscrire son
+        histoire au concours depuis son espace. <br />
+        Chaque semaine (dimanche matin, à partir de 10h), les participants
+        découvrent les deux histoires qu'ils doivent lire.
+        <br />
+        Ils peuvent cliquer sur la couverture de l'image pour être directement
+        redirigés vers le livre sur Wattpad. <br />
+        Toujours depuis leur espace, ils doivent voter pour l'histoire qu'ils
+        ont préférée (en cliquant sur le bouton qui correspond). <br />
+        Ils ont jusqu'au samedi soir pour le faire (avant minuit).
+        <br />
+        Attention, chaque oubli amène une pénalité de deux points. <br />
+        Au bout du troisième oubli, l'auteur reçoit un avertissement.
       </div>
       <h2>Liste des participants inscrits pour la prochaine session.</h2>
       <br />

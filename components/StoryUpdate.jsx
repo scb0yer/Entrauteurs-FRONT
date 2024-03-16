@@ -36,7 +36,44 @@ export default function StoryUpdate({
   const saveStory = async () => {
     setIsloading(true);
     try {
-      if (!storyToUpdate.story_id) {
+      let missingDatas = false;
+      if (
+        !story_cat ||
+        !story_description ||
+        !story_title ||
+        !story_cover ||
+        !story_url
+      ) {
+        setWarning(`Tous les champs doivent être renseignés.`);
+        missingDatas = true;
+        setAlert(true);
+        setTimeout(() => {
+          setAlert(false);
+        }, 3100);
+      } else if (
+        story_cover.slice(0, 30) !== "https://img.wattpad.com/cover/"
+      ) {
+        setWarning(
+          `L'adresse de la couverture de ton livre doit commencer par "https://img.wattpad.com/cover/"`
+        );
+        missingDatas = true;
+        setAlert(true);
+        setTimeout(() => {
+          setAlert(false);
+        }, 3100);
+      } else if (
+        story_cover.slice(0, 30) !== "https://www.wattpad.com/story/"
+      ) {
+        setWarning(
+          `L'adresse de ton livre doit commencer par "https://www.wattpad.com/story/"`
+        );
+        missingDatas = true;
+        setAlert(true);
+        setTimeout(() => {
+          setAlert(false);
+        }, 3100);
+      }
+      if (!storyToUpdate.story_id && !missingDatas) {
         const { data } = await axios.post(
           `https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/writer/book/add`,
           {
@@ -59,9 +96,9 @@ export default function StoryUpdate({
         setTimeout(() => {
           setAlert(false);
           setDisplayStoryUpdate(false);
-        }, 3500);
+        }, 3100);
         setStoryToUpdate({});
-      } else {
+      } else if (!missingDatas) {
         const { data } = await axios.post(
           `https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/writer/book/update`,
           {
@@ -85,7 +122,7 @@ export default function StoryUpdate({
         setTimeout(() => {
           setAlert(false);
           setDisplayStoryUpdate(false);
-        }, 3500);
+        }, 3100);
         setStoryToUpdate({});
       }
     } catch (error) {
