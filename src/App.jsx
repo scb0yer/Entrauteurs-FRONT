@@ -50,11 +50,13 @@ import CookiesPage from "../pages/CookiesPage";
 import MentionsLegalesPage from "../pages/MentionsLegales";
 import AdminPage from "../pages/AdminPage";
 import Contestation from "../components/Contestation";
+import StickersSelection from "../components/StickersSelection";
 
 function App() {
   const [count, setCount] = useState(0);
   const [token, setToken] = useState(null);
   const [writerId, setWriterId] = useState(null);
+  const [recipientId, setRecipientId] = useState(null);
   const [isInExchange, setIsInExchange] = useState(false);
   const [storyToUpdate, setStoryToUpdate] = useState({});
   const [adult, setAdult] = useState(false);
@@ -66,6 +68,8 @@ function App() {
   const [displayStoryUpdate, setDisplayStoryUpdate] = useState(false);
   const [displayReview, setDisplayReview] = useState(false);
   const [displayContestation, setDisplayContestation] = useState(false);
+  const [displayStickersSelection, setDisplayStickersSelection] =
+    useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
   return (
@@ -76,6 +80,7 @@ function App() {
         displayStoryUpdate={displayStoryUpdate}
         displayReview={displayReview}
         displayContestation={displayContestation}
+        displayStickersSelection={displayStickersSelection}
         token={token}
       />
       <Routes>
@@ -114,7 +119,14 @@ function App() {
         />
         <Route
           path="/writer/:id"
-          element={<WriterPage token={token} storiesRead={storiesRead} />}
+          element={
+            <WriterPage
+              token={token}
+              storiesRead={storiesRead}
+              setDisplayStickersSelection={setDisplayStickersSelection}
+              setRecipientId={setRecipientId}
+            />
+          }
         />
         <Route path="/concours" element={<ConcoursPage />} />
         <Route
@@ -196,6 +208,13 @@ function App() {
           token={token}
           setDisplayContestation={setDisplayContestation}
           story_review={story_review}
+        />
+      )}
+      {displayStickersSelection && (
+        <StickersSelection
+          token={token}
+          setDisplayStickersSelection={setDisplayStickersSelection}
+          recipientId={recipientId}
         />
       )}
       <Footer />

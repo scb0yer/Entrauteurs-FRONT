@@ -14,6 +14,7 @@ import AlertDisplay from "../components/Alert";
 import BookImg from "../components/BookImg";
 import DisplayDate from "../functions/displayDate";
 import Loading from "../components/Loading";
+import StickersReceived from "../components/StickersReceived";
 
 export default function ProfilPage({
   setDisplaySignin,
@@ -50,7 +51,7 @@ export default function ProfilPage({
   const [discord, setDiscord] = useState();
   const [description, setDescription] = useState();
   const [target_progress, setTargetProgress] = useState();
-  const [public_progress, setPublicProgress] = useState();
+  const [public_progress, setPublicProgress] = useState(false);
   const [banner, setBanner] = useState(null);
   const [preview, setPreview] = useState("");
   const [alert, setAlert] = useState(false);
@@ -59,6 +60,7 @@ export default function ProfilPage({
   const [exchange, setExchange] = useState(false);
   const [session, setSession] = useState(false);
   const [newProgress, setNewProgress] = useState();
+  const [displayStickersReceived, setDisplayStickersReceived] = useState(false);
   const rating = [0, 1, 2, 3, 4];
 
   function MyDropzone() {
@@ -116,6 +118,7 @@ export default function ProfilPage({
               },
             }
           );
+          console.log("MESSAGES", data.messages);
           if (data.concours_id) {
             const response = await axios.get(
               "https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/author",
@@ -139,6 +142,9 @@ export default function ProfilPage({
                 setExchange(true);
               }
             }
+          }
+          if (data.messages) {
+            setDisplayStickersReceived(true);
           }
           const today = new Date();
           const year2 = today.getFullYear();
@@ -218,6 +224,7 @@ export default function ProfilPage({
         formData.append("instagram", instagram);
         formData.append("discord", discord);
         formData.append("description", description);
+        formData.append("public_progress", public_progress);
         formData.append("target_progress", target_progress);
         formData.append("mature", mature);
         const { data } = await axios.post(
@@ -476,769 +483,806 @@ export default function ProfilPage({
   };
 
   return (
-    <main className="profil">
+    <div>
+      {displayStickersReceived
+        ? document.body.classList.add("scroll-lock")
+        : document.body.classList.remove("scroll-lock")}
       {alert && <AlertDisplay warning={warning} />}
-      {token && isloading && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "50vh",
-          }}
-        >
-          <Loading isLoading={isloading} />
-        </div>
+      {displayStickersReceived && data.messages && (
+        <StickersReceived
+          setDisplayStickersReceived={setDisplayStickersReceived}
+          token={token}
+          messages={data.messages}
+        />
       )}
-      {token && !isloading && (
-        <>
-          <div className="banner">
-            <MyDropzone className="dropzone" />
-            <FontAwesomeIcon icon="image" size="xl" className="picto-img" />
-            <div className="name">
-              <div className="wattpad-name">
-                <img className="min-logo" src={logowattpad} alt="Wattpad" />
-                <div>@{data.writer_details.username}</div>
-                <div style={{ width: "20px" }}></div>
-              </div>
-              <div className="discord-name">
-                <img className="min-logo" src={logodiscord} alt="Discord" />
-                <input
-                  className="discord-input"
-                  type="text"
-                  value={discord}
-                  placeholder="pseudo Discord"
-                  onChange={(event) => {
-                    setDiscord(event.target.value);
-                    setChange(true);
-                  }}
-                />
-                <FontAwesomeIcon
-                  tyle={{ width: "20px" }}
-                  icon="pen-nib"
-                  size="xs"
-                />
-              </div>
-            </div>
-            {isAdmin && (
-              <div className="admin">
-                <button
-                  onClick={() => {
-                    navigate("/admin");
-                  }}
-                >
-                  Espace Administrateur
-                </button>
-              </div>
-            )}
+      <main className="profil">
+        {token && isloading && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "50vh",
+            }}
+          >
+            <Loading isLoading={isloading} />
           </div>
-          <div className="bloc1">
-            <div className="column1">
-              <div className="infos">
-                <h3>Infos</h3>
-                <ul>
-                  <li>Nombre de vues du profil : {data.views}</li>
-                  <li>Role : {data.writer_details.role}</li>
-                  <li>Statut : {data.writer_details.status}</li>
-                  <li>
-                    Date de naissance :{" "}
-                    <DisplayDate date={data.writer_details.birthdate} />
-                  </li>
-                  <li>
-                    <div className="mature">
-                      J'accepte de lire des histoires avec du contenu mature ?
-                      {adult &&
-                        (mature ? (
-                          <input
-                            type="checkbox"
-                            id="matureReader"
-                            name="matureReader"
-                            checked
-                            onChange={() => {
-                              setMature(false);
-                              setChange(true);
-                            }}
-                          />
-                        ) : (
-                          <input
-                            type="checkbox"
-                            id="matureReader"
-                            name="matureReader"
-                            onChange={() => {
-                              setMature(true);
-                              setChange(true);
-                            }}
-                          />
-                        ))}
-                      {!adult && " Non (réservé aux +18 ans)"}
-                      {adult && mature ? "Oui" : "Non"}
-                    </div>
-                  </li>
-                  <li>
-                    Lien Facebook :{" "}
-                    <input
-                      type="text"
-                      value={facebook}
-                      onChange={(event) => {
-                        setFacebook(event.target.value);
-                        setChange(true);
-                      }}
-                    />
-                  </li>
-                  <li>
-                    Lien Instagram :{" "}
-                    <input
-                      type="text"
-                      value={instagram}
-                      onChange={(event) => {
-                        setInstagram(event.target.value);
-                        setChange(true);
-                      }}
-                    />
-                  </li>
-                  <li>Lien Wattpad : {wattpad}</li>
-                  <li>Email : {data.connexion_details.email}</li>
-                </ul>
-              </div>
-              <div className="avertissement">
-                <h3>Avertissemments reçus</h3>
-                {data.warnings.length === 0 ? (
-                  <div>Tu n'as reçu aucun avertissement pour le moment.</div>
-                ) : (
-                  <div>Tu as reçu {data.warnings.length} avertissement(s).</div>
-                )}
-                <br />
-                Tu reçois automatiquement des avertissements si tu publies des
-                avis inappropriés ou sans aucune bienveillance lors des échanges
-                d'avis, si tu ne votes pas pour une histoire lors d'un concours,
-                ou si tu contestes un avis qui était pourtant approprié et
-                bienveillant.
-                <br />
-                Au bout de 3 avertissements, ton compte est suspendu.
-                <br />
-                <div className="warning">
-                  {data.warnings.map((warning, index) => {
-                    return (
-                      <div key={index}>
-                        {warning.admin} : {warning.warning} ({warning.date})
-                      </div>
-                    );
-                  })}
+        )}
+        {token && !isloading && (
+          <>
+            <div className="banner">
+              <MyDropzone className="dropzone" />
+              <FontAwesomeIcon icon="image" size="xl" className="picto-img" />
+              <div className="name">
+                <div className="wattpad-name">
+                  <img className="min-logo" src={logowattpad} alt="Wattpad" />
+                  <div>@{data.writer_details.username}</div>
+                  <div style={{ width: "20px" }}></div>
+                </div>
+                <div className="discord-name">
+                  <img className="min-logo" src={logodiscord} alt="Discord" />
+                  <input
+                    className="discord-input"
+                    type="text"
+                    value={discord}
+                    placeholder="pseudo Discord"
+                    onChange={(event) => {
+                      setDiscord(event.target.value);
+                      setChange(true);
+                    }}
+                  />
+                  <FontAwesomeIcon
+                    tyle={{ width: "20px" }}
+                    icon="pen-nib"
+                    size="xs"
+                  />
                 </div>
               </div>
-              <div>
-                <h3>Histoires lues</h3>
-                <div className="readingList">
-                  {data.stories_read.map((book, index) => {
-                    return (
-                      <BookImg
-                        key={index}
-                        story_cover={book.book_read.story_details.story_cover}
-                        story_title={book.book_read.story_details.story_title}
-                        story_url={book.book_read.story_details.story_url}
-                        story_id={book.book_read._id}
-                        size={150}
-                      />
-                    );
-                  })}
+              {isAdmin && (
+                <div className="admin">
+                  <button
+                    onClick={() => {
+                      navigate("/admin");
+                    }}
+                  >
+                    Espace Administrateur
+                  </button>
                 </div>
-              </div>
+              )}
             </div>
-            <div className="column2">
-              <div className="presentation">
-                <h3>Présentation</h3>
-                <textarea
-                  rows={6}
-                  value={description}
-                  onChange={(event) => {
-                    setDescription(event.target.value);
-                    setChange(true);
-                  }}
-                />
-              </div>
-              {change && (
-                <p className="change-alert">
-                  Tu as fait des modifications sur ton profil. N'oublie pas de
-                  les enregistrer avant de quitter la page !
-                </p>
-              )}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-evenly",
-                  margin: "0px",
-                  border: "none",
-                  height: "50px",
-                }}
-              >
-                <button
-                  className="btn-save"
-                  onClick={() => {
-                    update();
-                  }}
-                >
-                  Enregistrer les modifications
-                </button>{" "}
-                <button
-                  className="btn-save"
-                  onClick={() => {
-                    navigate("/password");
-                  }}
-                >
-                  Modifier le mot de passe
-                </button>
-              </div>
-              {isInExchange && (
-                <div>
-                  <h3>Histoire tirée pour l'échange d'avis</h3>
-                  <p>
-                    Tu dois y consacrer deux heures de lecture puis remplir la
-                    fiche d'avis.
-                  </p>
-                  <br />
-                  <div className="exchangeStory">
-                    <BookImg
-                      className="cover"
-                      story_cover={
-                        data.stories_assigned[data.stories_assigned.length - 1]
-                          .book_assigned.story_details.story_cover
-                      }
-                      story_title={
-                        data.stories_assigned[data.stories_assigned.length - 1]
-                          .book_assigned.story_details.story_title
-                      }
-                      story_url={
-                        data.stories_assigned[data.stories_assigned.length - 1]
-                          .book_assigned.story_details.story_url
-                      }
-                      story_id={
-                        data.stories_assigned[data.stories_assigned.length - 1]
-                          .book_assigned._id
-                      }
-                      size={200}
-                    />
-                    <div>
-                      <h3>
-                        {
-                          data.stories_assigned[
-                            data.stories_assigned.length - 1
-                          ].book_assigned.story_details.story_title
-                        }
-                      </h3>
-                      <div>
-                        {
-                          data.stories_assigned[
-                            data.stories_assigned.length - 1
-                          ].book_assigned.story_details.story_cat
-                        }{" "}
-                        --{" "}
-                        {data.stories_assigned[data.stories_assigned.length - 1]
-                          .book_assigned.story_details.story_mature
-                          ? "Mature"
-                          : "Tout public"}{" "}
-                      </div>
-                      <div>
-                        {data.stories_assigned[
-                          data.stories_assigned.length - 1
-                        ].book_assigned.story_details.story_description.slice(
-                          0,
-                          200
-                        )}
-                        {data.stories_assigned[
-                          data.stories_assigned.length - 1
-                        ].book_assigned.story_details.story_description.slice(
-                          201
-                        ) && "..."}
-                      </div>
-                      <button
-                        style={{ width: "150px" }}
-                        onClick={() => {
-                          setDisplayReview(true);
-                        }}
-                      >
-                        Remplir la fiche avis
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-              {pendingReviews.length > 0 && (
-                <div>
-                  <h3>Avis à valider</h3>
-                  {pendingReviews.map((review, index) => {
-                    return (
-                      <div className="review-details" key={index}>
-                        <div>
-                          <h4>Orthographe</h4>
-                          <br />
-                          <div>
-                            <div>
-                              Commentaire :
-                              <div>
-                                {review.review_details.orthographe.comment1}
-                              </div>
-                            </div>
-                            <div>
-                              {" "}
-                              Note : {review.review_details.orthographe.note1}/2
-                            </div>
-                          </div>
-                        </div>
-                        <br />
-                        <div>
-                          <h4>Style</h4>
-                          <br />
-                          <div>
-                            <div>
-                              Commentaire :{" "}
-                              <div>{review.review_details.style.comment2}</div>
-                            </div>
-                            <div>
-                              {" "}
-                              Note : {review.review_details.style.note2}/2
-                            </div>
-                          </div>
-                        </div>
-                        <br />
-                        <div>
-                          <h4>Cohérence</h4>
-                          <br />
-                          <div>
-                            <div>
-                              Commentaire :{" "}
-                              <div>
-                                {review.review_details.coherence.comment3}
-                              </div>
-                            </div>
-                            <div>
-                              {" "}
-                              Note : {review.review_details.coherence.note3}/2
-                            </div>
-                          </div>
-                        </div>
-                        <br />
-                        <div>
-                          <h4>Suspens</h4>
-                          <br />
-                          <div>
-                            <div>
-                              Commentaire :{" "}
-                              <div>
-                                {review.review_details.suspens.comment4}
-                              </div>
-                            </div>
-                            <div>
-                              {" "}
-                              Note : {review.review_details.suspens.note4}/2
-                            </div>
-                          </div>
-                        </div>
-                        <br />
-                        <div>
-                          <h4>Dialogues</h4>
-                          <br />
-                          <div>
-                            <div>
-                              Commentaire :{" "}
-                              <div>
-                                {review.review_details.dialogues.comment5}
-                              </div>
-                            </div>
-                            <div>
-                              {" "}
-                              Note : {review.review_details.dialogues.note5}/2
-                            </div>
-                          </div>
-                        </div>
-                        <br />
-                        <div className="global">
-                          <p>Note globale : {review.note_global}/5</p>
-                          Rendre public l'avis sur le site ?
-                          {publicReview ? (
+            <div className="bloc1">
+              <div className="column1">
+                <div className="infos">
+                  <h3>Infos</h3>
+                  <ul>
+                    <li>Nombre de vues du profil : {data.views}</li>
+                    <li>Role : {data.writer_details.role}</li>
+                    <li>Statut : {data.writer_details.status}</li>
+                    <li>
+                      Date de naissance :{" "}
+                      <DisplayDate date={data.writer_details.birthdate} />
+                    </li>
+                    <li>
+                      <div className="mature">
+                        J'accepte de lire des histoires avec du contenu mature ?
+                        {adult &&
+                          (mature ? (
                             <input
                               type="checkbox"
-                              id="publicReview"
-                              name="publicReview"
+                              id="matureReader"
+                              name="matureReader"
                               checked
                               onChange={() => {
-                                setPublicReview(false);
+                                setMature(false);
+                                setChange(true);
                               }}
                             />
                           ) : (
                             <input
                               type="checkbox"
-                              id="publicReview"
-                              name="publicReview"
+                              id="matureReader"
+                              name="matureReader"
                               onChange={() => {
-                                setPublicReview(true);
+                                setMature(true);
+                                setChange(true);
                               }}
                             />
+                          ))}
+                        {!adult && " Non (réservé aux +18 ans)"}
+                        {adult && mature ? "Oui" : "Non"}
+                      </div>
+                    </li>
+                    <li>
+                      Lien Facebook :{" "}
+                      <input
+                        type="text"
+                        value={facebook}
+                        onChange={(event) => {
+                          setFacebook(event.target.value);
+                          setChange(true);
+                        }}
+                      />
+                    </li>
+                    <li>
+                      Lien Instagram :{" "}
+                      <input
+                        type="text"
+                        value={instagram}
+                        onChange={(event) => {
+                          setInstagram(event.target.value);
+                          setChange(true);
+                        }}
+                      />
+                    </li>
+                    <li>Lien Wattpad : {wattpad}</li>
+                    <li>Email : {data.connexion_details.email}</li>
+                  </ul>
+                </div>
+                <div className="avertissement">
+                  <h3>Avertissemments reçus</h3>
+                  {data.warnings.length === 0 ? (
+                    <div>Tu n'as reçu aucun avertissement pour le moment.</div>
+                  ) : (
+                    <div>
+                      Tu as reçu {data.warnings.length} avertissement(s).
+                    </div>
+                  )}
+                  <br />
+                  Tu reçois automatiquement des avertissements si tu publies des
+                  avis inappropriés ou sans aucune bienveillance lors des
+                  échanges d'avis, si tu ne votes pas pour une histoire lors
+                  d'un concours, ou si tu contestes un avis qui était pourtant
+                  approprié et bienveillant.
+                  <br />
+                  Au bout de 3 avertissements, ton compte est suspendu.
+                  <br />
+                  <div className="warning">
+                    {data.warnings.map((warning, index) => {
+                      return (
+                        <div key={index}>
+                          {warning.admin} : {warning.warning} ({warning.date})
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div>
+                  <h3>Histoires lues</h3>
+                  <div className="readingList">
+                    {data.stories_read.map((book, index) => {
+                      return (
+                        <BookImg
+                          key={index}
+                          story_cover={book.book_read.story_details.story_cover}
+                          story_title={book.book_read.story_details.story_title}
+                          story_url={book.book_read.story_details.story_url}
+                          story_id={book.book_read._id}
+                          size={150}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+              <div className="column2">
+                <div className="presentation">
+                  <h3>Présentation</h3>
+                  <textarea
+                    rows={6}
+                    value={description}
+                    onChange={(event) => {
+                      setDescription(event.target.value);
+                      setChange(true);
+                    }}
+                  />
+                </div>
+                {change && (
+                  <p className="change-alert">
+                    Tu as fait des modifications sur ton profil. N'oublie pas de
+                    les enregistrer avant de quitter la page !
+                  </p>
+                )}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-evenly",
+                    margin: "0px",
+                    border: "none",
+                    height: "50px",
+                  }}
+                >
+                  <button
+                    className="btn-save"
+                    onClick={() => {
+                      update();
+                    }}
+                  >
+                    Enregistrer les modifications
+                  </button>{" "}
+                  <button
+                    className="btn-save"
+                    onClick={() => {
+                      navigate("/password");
+                    }}
+                  >
+                    Modifier le mot de passe
+                  </button>
+                </div>
+                {isInExchange && (
+                  <div>
+                    <h3>Histoire tirée pour l'échange d'avis</h3>
+                    <p>
+                      Tu dois y consacrer deux heures de lecture puis remplir la
+                      fiche d'avis.
+                    </p>
+                    <br />
+                    <div className="exchangeStory">
+                      <BookImg
+                        className="cover"
+                        story_cover={
+                          data.stories_assigned[
+                            data.stories_assigned.length - 1
+                          ].book_assigned.story_details.story_cover
+                        }
+                        story_title={
+                          data.stories_assigned[
+                            data.stories_assigned.length - 1
+                          ].book_assigned.story_details.story_title
+                        }
+                        story_url={
+                          data.stories_assigned[
+                            data.stories_assigned.length - 1
+                          ].book_assigned.story_details.story_url
+                        }
+                        story_id={
+                          data.stories_assigned[
+                            data.stories_assigned.length - 1
+                          ].book_assigned._id
+                        }
+                        size={200}
+                      />
+                      <div>
+                        <h3>
+                          {
+                            data.stories_assigned[
+                              data.stories_assigned.length - 1
+                            ].book_assigned.story_details.story_title
+                          }
+                        </h3>
+                        <div>
+                          {
+                            data.stories_assigned[
+                              data.stories_assigned.length - 1
+                            ].book_assigned.story_details.story_cat
+                          }{" "}
+                          --{" "}
+                          {data.stories_assigned[
+                            data.stories_assigned.length - 1
+                          ].book_assigned.story_details.story_mature
+                            ? "Mature"
+                            : "Tout public"}{" "}
+                        </div>
+                        <div>
+                          {data.stories_assigned[
+                            data.stories_assigned.length - 1
+                          ].book_assigned.story_details.story_description.slice(
+                            0,
+                            200
                           )}
-                          {publicReview ? "oui" : "non"}
+                          {data.stories_assigned[
+                            data.stories_assigned.length - 1
+                          ].book_assigned.story_details.story_description.slice(
+                            201
+                          ) && "..."}
+                        </div>
+                        <button
+                          style={{ width: "150px" }}
+                          onClick={() => {
+                            setDisplayReview(true);
+                          }}
+                        >
+                          Remplir la fiche avis
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {pendingReviews.length > 0 && (
+                  <div>
+                    <h3>Avis à valider</h3>
+                    {pendingReviews.map((review, index) => {
+                      return (
+                        <div className="review-details" key={index}>
+                          <div>
+                            <h4>Orthographe</h4>
+                            <br />
+                            <div>
+                              <div>
+                                Commentaire :
+                                <div>
+                                  {review.review_details.orthographe.comment1}
+                                </div>
+                              </div>
+                              <div>
+                                {" "}
+                                Note : {review.review_details.orthographe.note1}
+                                /2
+                              </div>
+                            </div>
+                          </div>
+                          <br />
+                          <div>
+                            <h4>Style</h4>
+                            <br />
+                            <div>
+                              <div>
+                                Commentaire :{" "}
+                                <div>
+                                  {review.review_details.style.comment2}
+                                </div>
+                              </div>
+                              <div>
+                                {" "}
+                                Note : {review.review_details.style.note2}/2
+                              </div>
+                            </div>
+                          </div>
+                          <br />
+                          <div>
+                            <h4>Cohérence</h4>
+                            <br />
+                            <div>
+                              <div>
+                                Commentaire :{" "}
+                                <div>
+                                  {review.review_details.coherence.comment3}
+                                </div>
+                              </div>
+                              <div>
+                                {" "}
+                                Note : {review.review_details.coherence.note3}/2
+                              </div>
+                            </div>
+                          </div>
+                          <br />
+                          <div>
+                            <h4>Suspens</h4>
+                            <br />
+                            <div>
+                              <div>
+                                Commentaire :{" "}
+                                <div>
+                                  {review.review_details.suspens.comment4}
+                                </div>
+                              </div>
+                              <div>
+                                {" "}
+                                Note : {review.review_details.suspens.note4}/2
+                              </div>
+                            </div>
+                          </div>
+                          <br />
+                          <div>
+                            <h4>Dialogues</h4>
+                            <br />
+                            <div>
+                              <div>
+                                Commentaire :{" "}
+                                <div>
+                                  {review.review_details.dialogues.comment5}
+                                </div>
+                              </div>
+                              <div>
+                                {" "}
+                                Note : {review.review_details.dialogues.note5}/2
+                              </div>
+                            </div>
+                          </div>
+                          <br />
+                          <div className="global">
+                            <p>Note globale : {review.note_global}/5</p>
+                            Rendre public l'avis sur le site ?
+                            {publicReview ? (
+                              <input
+                                type="checkbox"
+                                id="publicReview"
+                                name="publicReview"
+                                checked
+                                onChange={() => {
+                                  setPublicReview(false);
+                                }}
+                              />
+                            ) : (
+                              <input
+                                type="checkbox"
+                                id="publicReview"
+                                name="publicReview"
+                                onChange={() => {
+                                  setPublicReview(true);
+                                }}
+                              />
+                            )}
+                            {publicReview ? "oui" : "non"}
+                            <button
+                              onClick={() => {
+                                validateReview(review.book);
+                              }}
+                            >
+                              Valider
+                            </button>
+                            <button
+                              onClick={() => {
+                                setStory_review(review._id);
+                                setDisplayContestation(true);
+                              }}
+                            >
+                              Contester
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+                {data.concours_id && data.concours_id.status === "Active" && (
+                  <div>
+                    <section className="activeSection">
+                      <h2>Concours 🏆 --- Semaine {week}</h2>
+                      <div className="invisible">
+                        <p className="smallText">
+                          Tu as jusqu'à samedi soir pour consacrer une heure de
+                          lecture à chacune de ces histoires, et voter pour
+                          celle que tu préfères.
+                        </p>
+                        <p className="smallText">
+                          Attention, une fois que tu as voté, tu ne peux plus
+                          revenir en arrière.
+                        </p>
+                        <p className="smallText">
+                          Si tu ne votes pas, tu auras une pénalité de deux
+                          points.
+                        </p>
+                        <p className="smallText">
+                          Quand la semaine sera terminée (dimanche dans la
+                          matinée), deux nouvelles histoires apparaitront.
+                        </p>
+                      </div>
+                      <br />
+                      <p>
+                        Clique sur la couverture du livre pour le lire (sur
+                        wattpad).
+                      </p>
+                      <br />
+                      <div className="vote">
+                        {storiesAssigned.map((story, index) => {
+                          return (
+                            <div key={index}>
+                              <BookImg
+                                story_cover={story.story_cover}
+                                story_title={story.story_title}
+                                story_url={story.story_url}
+                                size={200}
+                              />
+                              {!alreadyVoted && (
+                                <button
+                                  onClick={() => {
+                                    vote(story.story_id);
+                                  }}
+                                >
+                                  Voter pour {story.story_title.slice(0, 15)}
+                                  {story.story_title.slice(16) && "..."}
+                                </button>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </section>
+                  </div>
+                )}
+                <div className="writtenStories">
+                  <div className="addStory">
+                    <h3>Histoires écrites</h3>
+                    <button
+                      onClick={() => {
+                        if (data.writer_details.status === "Pending") {
+                          setWarning(
+                            "Ton compte doit d'abord être validé pour que tu puisses ajouter une histoire. Cela se fait généralement en moins de 24h."
+                          );
+                          setAlert(true);
+                          setTimeout(() => {
+                            setAlert(false);
+                          }, 3500);
+                        } else {
+                          setDisplayStoryUpdate(true);
+                          setToken(token);
+                        }
+                      }}
+                    >
+                      Ajouter une histoire
+                    </button>
+                  </div>
+                  {data.stories_written.map((book, index) => {
+                    let half = false;
+                    if (
+                      book.book_written.note -
+                        Math.floor(book.book_written.note) >
+                      0
+                    ) {
+                      half = true;
+                    }
+                    return (
+                      <div key={index}>
+                        <div className="storyDetails">
+                          <BookImg
+                            className="cover"
+                            story_cover={
+                              book.book_written.story_details.story_cover
+                            }
+                            story_title={
+                              book.book_written.story_details.story_title
+                            }
+                            story_url={
+                              book.book_written.story_details.story_url
+                            }
+                            story_id={book.book_written._id}
+                            size={200}
+                          />
+                          <div className="storyDetails_right">
+                            <h3>
+                              {book.book_written.story_details.story_title}
+                            </h3>
+                            {book.book_written.statusForConcours ===
+                              "Pending" && (
+                              <div>
+                                Histoire inscrite au prochain concours :
+                                inscription en attente de validation
+                              </div>
+                            )}
+                            {book.book_written.statusForConcours ===
+                              "Registered" && (
+                              <div>
+                                Histoire inscrite au prochain concours :
+                                inscription validée
+                              </div>
+                            )}
+                            <div>
+                              {book.book_written.story_details.story_cat} --{" "}
+                              {book.book_written.story_details.story_mature
+                                ? "Mature"
+                                : "Tout public"}{" "}
+                              {book.book_written.statusForConcours ===
+                                "Active" && (
+                                <div>Histoire inscrite au concours actuel</div>
+                              )}
+                              -- {book.book_written.views} vues
+                            </div>
+
+                            {book.book_written.note > 0 && (
+                              <div className="rate">
+                                {rating.map((rate, index) => {
+                                  if (
+                                    rate < Math.floor(book.book_written.note)
+                                  ) {
+                                    return (
+                                      <FontAwesomeIcon
+                                        key={index}
+                                        icon="star"
+                                      />
+                                    );
+                                  } else if (
+                                    rate ===
+                                      Math.floor(book.book_written.note) &&
+                                    half
+                                  ) {
+                                    return (
+                                      <FontAwesomeIcon
+                                        key={index}
+                                        icon="star-half"
+                                      />
+                                    );
+                                  }
+                                })}
+                                <span className="note">
+                                  {book.book_written.note}/5
+                                </span>
+                              </div>
+                            )}
+
+                            <div>Classement au concours</div>
+                            <div>
+                              {book.book_written.story_details.story_description.slice(
+                                0,
+                                200
+                              )}
+                              {book.book_written.story_details.story_description.slice(
+                                201
+                              ) && "..."}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="subscription">
                           <button
                             onClick={() => {
-                              validateReview(review.book);
+                              const storyToUpdate = {
+                                story_id: book.book_written._id,
+                                story_title:
+                                  book.book_written.story_details.story_title,
+                                story_url:
+                                  book.book_written.story_details.story_url,
+                                story_cover:
+                                  book.book_written.story_details.story_cover,
+                                story_cat:
+                                  book.book_written.story_details.story_cat,
+                                story_description:
+                                  book.book_written.story_details
+                                    .story_description,
+                                story_mature:
+                                  book.book_written.story_details.story_mature,
+                              };
+                              setStoryToUpdate(storyToUpdate);
+                              setDisplayStoryUpdate(true);
                             }}
                           >
-                            Valider
+                            Modifier
                           </button>
-                          <button
-                            onClick={() => {
-                              setStory_review(review._id);
-                              setDisplayContestation(true);
-                            }}
-                          >
-                            Contester
-                          </button>
+                          {data.concours_id.status !== "Active" &&
+                            book.book_written.statusForConcours !== "Pending" &&
+                            book.book_written.statusForConcours !==
+                              "Registered" && (
+                              <button
+                                onClick={() => {
+                                  if (data.discord_checked) {
+                                    registerToSession(
+                                      book.book_written.story_details
+                                        .story_title,
+                                      book.book_written.story_details.story_url,
+                                      book.book_written.story_details
+                                        .story_cover
+                                    );
+                                  } else {
+                                    setWarning(
+                                      "Ton compte discord doit être vérifié par un admin pour inscrire ton histoire. Contacte-les sur Discord pour qu'ils valident ton compte."
+                                    );
+                                    setAlert(true);
+                                    setTimeout(() => {
+                                      setAlert(false);
+                                    }, 3500);
+                                  }
+                                }}
+                              >
+                                Inscrire au concours
+                              </button>
+                            )}
+                          {!exchange &&
+                            book.book_written.isRegistered === "No" && (
+                              <button
+                                onClick={() => {
+                                  if (data.discord_checked) {
+                                    registerToExchange(
+                                      book.book_written._id,
+                                      book.book_written.isRegistered
+                                    );
+                                    setToken(token);
+                                  } else {
+                                    setWarning(
+                                      "Ton compte discord doit être vérifié par un admin pour inscrire ton histoire. Contacte-les sur Discord pour qu'ils valident ton compte."
+                                    );
+                                    setAlert(true);
+                                    setTimeout(() => {
+                                      setAlert(false);
+                                    }, 3500);
+                                  }
+                                }}
+                              >
+                                Inscrire à l'échange
+                              </button>
+                            )}
                         </div>
                       </div>
                     );
                   })}
                 </div>
-              )}
-              {data.concours_id && data.concours_id.status === "Active" && (
-                <div>
-                  <section className="activeSection">
-                    <h2>Concours 🏆 --- Semaine {week}</h2>
-                    <div className="invisible">
-                      <p className="smallText">
-                        Tu as jusqu'à samedi soir pour consacrer une heure de
-                        lecture à chacune de ces histoires, et voter pour celle
-                        que tu préfères.
-                      </p>
-                      <p className="smallText">
-                        Attention, une fois que tu as voté, tu ne peux plus
-                        revenir en arrière.
-                      </p>
-                      <p className="smallText">
-                        Si tu ne votes pas, tu auras une pénalité de deux
-                        points.
-                      </p>
-                      <p className="smallText">
-                        Quand la semaine sera terminée (dimanche dans la
-                        matinée), deux nouvelles histoires apparaitront.
-                      </p>
-                    </div>
-                    <br />
-                    <p>
-                      Clique sur la couverture du livre pour le lire (sur
-                      wattpad).
-                    </p>
-                    <br />
-                    <div className="vote">
-                      {storiesAssigned.map((story, index) => {
-                        return (
-                          <div key={index}>
-                            <BookImg
-                              story_cover={story.story_cover}
-                              story_title={story.story_title}
-                              story_url={story.story_url}
-                              size={200}
-                            />
-                            {!alreadyVoted && (
-                              <button
-                                onClick={() => {
-                                  vote(story.story_id);
-                                }}
-                              >
-                                Voter pour {story.story_title.slice(0, 15)}
-                                {story.story_title.slice(16) && "..."}
-                              </button>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </section>
-                </div>
-              )}
-              <div className="writtenStories">
-                <div className="addStory">
-                  <h3>Histoires écrites</h3>
-                  <button
-                    onClick={() => {
-                      if (data.writer_details.status === "Pending") {
-                        setWarning(
-                          "Ton compte doit d'abord être validé pour que tu puisses ajouter une histoire. Cela se fait généralement en moins de 24h."
-                        );
-                        setAlert(true);
-                        setTimeout(() => {
-                          setAlert(false);
-                        }, 3500);
-                      } else {
-                        setDisplayStoryUpdate(true);
-                        setToken(token);
-                      }
-                    }}
-                  >
-                    Ajouter une histoire
-                  </button>
-                </div>
-                {data.stories_written.map((book, index) => {
-                  let half = false;
-                  if (
-                    book.book_written.note -
-                      Math.floor(book.book_written.note) >
-                    0
-                  ) {
-                    half = true;
-                  }
-                  return (
-                    <div key={index}>
-                      <div className="storyDetails">
-                        <BookImg
-                          className="cover"
-                          story_cover={
-                            book.book_written.story_details.story_cover
-                          }
-                          story_title={
-                            book.book_written.story_details.story_title
-                          }
-                          story_url={book.book_written.story_details.story_url}
-                          story_id={book.book_written._id}
-                          size={200}
-                        />
-                        <div className="storyDetails_right">
-                          <h3>{book.book_written.story_details.story_title}</h3>
-                          {book.book_written.statusForConcours ===
-                            "Pending" && (
-                            <div>
-                              Histoire inscrite au prochain concours :
-                              inscription en attente de validation
-                            </div>
-                          )}
-                          {book.book_written.statusForConcours ===
-                            "Registered" && (
-                            <div>
-                              Histoire inscrite au prochain concours :
-                              inscription validée
-                            </div>
-                          )}
-                          <div>
-                            {book.book_written.story_details.story_cat} --{" "}
-                            {book.book_written.story_details.story_mature
-                              ? "Mature"
-                              : "Tout public"}{" "}
-                            {book.book_written.statusForConcours ===
-                              "Active" && (
-                              <div>Histoire inscrite au concours actuel</div>
-                            )}
-                            -- {book.book_written.views} vues
-                          </div>
-
-                          {book.book_written.note > 0 && (
-                            <div className="rate">
-                              {rating.map((rate, index) => {
-                                if (rate < Math.floor(book.book_written.note)) {
-                                  return (
-                                    <FontAwesomeIcon key={index} icon="star" />
-                                  );
-                                } else if (
-                                  rate === Math.floor(book.book_written.note) &&
-                                  half
-                                ) {
-                                  return (
-                                    <FontAwesomeIcon
-                                      key={index}
-                                      icon="star-half"
-                                    />
-                                  );
-                                }
-                              })}
-                              <span className="note">
-                                {book.book_written.note}/5
-                              </span>
-                            </div>
-                          )}
-
-                          <div>Classement au concours</div>
-                          <div>
-                            {book.book_written.story_details.story_description.slice(
-                              0,
-                              200
-                            )}
-                            {book.book_written.story_details.story_description.slice(
-                              201
-                            ) && "..."}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="subscription">
-                        <button
-                          onClick={() => {
-                            const storyToUpdate = {
-                              story_id: book.book_written._id,
-                              story_title:
-                                book.book_written.story_details.story_title,
-                              story_url:
-                                book.book_written.story_details.story_url,
-                              story_cover:
-                                book.book_written.story_details.story_cover,
-                              story_cat:
-                                book.book_written.story_details.story_cat,
-                              story_description:
-                                book.book_written.story_details
-                                  .story_description,
-                              story_mature:
-                                book.book_written.story_details.story_mature,
-                            };
-                            setStoryToUpdate(storyToUpdate);
-                            setDisplayStoryUpdate(true);
-                          }}
-                        >
-                          Modifier
-                        </button>
-                        {data.concours_id.status !== "Active" &&
-                          book.book_written.statusForConcours !== "Pending" &&
-                          book.book_written.statusForConcours !==
-                            "Registered" && (
-                            <button
-                              onClick={() => {
-                                if (data.discord_checked) {
-                                  registerToSession(
-                                    book.book_written.story_details.story_title,
-                                    book.book_written.story_details.story_url,
-                                    book.book_written.story_details.story_cover
-                                  );
-                                } else {
-                                  setWarning(
-                                    "Ton compte discord doit être vérifié par un admin pour inscrire ton histoire. Contacte-les sur Discord pour qu'ils valident ton compte."
-                                  );
-                                  setAlert(true);
-                                  setTimeout(() => {
-                                    setAlert(false);
-                                  }, 3500);
-                                }
-                              }}
-                            >
-                              Inscrire au concours
-                            </button>
-                          )}
-                        {!exchange &&
-                          book.book_written.isRegistered === "No" && (
-                            <button
-                              onClick={() => {
-                                if (data.discord_checked) {
-                                  registerToExchange(
-                                    book.book_written._id,
-                                    book.book_written.isRegistered
-                                  );
-                                  setToken(token);
-                                } else {
-                                  setWarning(
-                                    "Ton compte discord doit être vérifié par un admin pour inscrire ton histoire. Contacte-les sur Discord pour qu'ils valident ton compte."
-                                  );
-                                  setAlert(true);
-                                  setTimeout(() => {
-                                    setAlert(false);
-                                  }, 3500);
-                                }
-                              }}
-                            >
-                              Inscrire à l'échange
-                            </button>
-                          )}
-                      </div>
-                    </div>
-                  );
-                })}
               </div>
             </div>
-          </div>
-          <div className="progression">
-            <h3>Progression</h3>
-            <div>
-              <label>
-                {" "}
-                Veux-tu que ta progression soit publique ?
-                {public_progress ? (
+            <div className="progression">
+              <h3>Progression</h3>
+              <div>
+                <label>
+                  {" "}
+                  Veux-tu que ta progression soit publique ?
+                  {public_progress ? (
+                    <input
+                      type="checkbox"
+                      id="publicProgress"
+                      name="publicProgress"
+                      checked
+                      onChange={() => {
+                        setPublicProgress(false);
+                        setChange(true);
+                      }}
+                    />
+                  ) : (
+                    <input
+                      type="checkbox"
+                      id="publicProgress"
+                      name="publicProgress"
+                      onChange={() => {
+                        setPublicProgress(true);
+                        setChange(true);
+                      }}
+                    />
+                  )}{" "}
+                  {public_progress ? "Oui" : "Non"}
+                </label>
+              </div>
+              <br />
+              <div className="settings">
+                <label>
+                  Objectif quotidien :
                   <input
-                    type="checkbox"
-                    id="publicProgress"
-                    name="publicProgress"
-                    checked
-                    onChange={() => {
-                      setPublicProgress(false);
+                    type="number"
+                    value={target_progress}
+                    onChange={(event) => {
+                      setTargetProgress(event.target.value);
                       setChange(true);
                     }}
-                  />
-                ) : (
-                  <input
-                    type="checkbox"
-                    id="publicProgress"
-                    name="publicProgress"
-                    onChange={() => {
-                      setPublicProgress(true);
-                      setChange(true);
+                  />{" "}
+                  mots{" "}
+                  <button
+                    onClick={() => {
+                      update();
                     }}
-                  />
-                )}{" "}
-                {public_progress ? "Oui" : "Non"}
-              </label>
+                  >
+                    Modifier
+                  </button>
+                </label>
+                <label>
+                  Nouvelle session :
+                  <input
+                    type="number"
+                    placeholder="Nombre de mots écrits"
+                    value={newProgress}
+                    onChange={(event) => {
+                      setNewProgress(event.target.value);
+                    }}
+                  />{" "}
+                  <button
+                    onClick={() => {
+                      updateProgress("add");
+                    }}
+                  >
+                    Ajouter
+                  </button>{" "}
+                  <button
+                    onClick={() => {
+                      updateProgress("replace");
+                    }}
+                  >
+                    Remplacer
+                  </button>
+                </label>
+              </div>
+              {target_progress && (
+                <Progression
+                  progress={data.progress}
+                  target={target_progress}
+                />
+              )}
             </div>
             <br />
-            <div className="settings">
-              <label>
-                Objectif quotidien :
-                <input
-                  type="number"
-                  value={target_progress}
-                  onChange={(event) => {
-                    setTargetProgress(event.target.value);
-                    setChange(true);
-                  }}
-                />{" "}
-                mots{" "}
-                <button
-                  onClick={() => {
-                    update();
-                  }}
-                >
-                  Modifier
-                </button>
-              </label>
-              <label>
-                Nouvelle session :
-                <input
-                  type="number"
-                  placeholder="Nombre de mots écrits"
-                  value={newProgress}
-                  onChange={(event) => {
-                    setNewProgress(event.target.value);
-                  }}
-                />{" "}
-                <button
-                  onClick={() => {
-                    updateProgress("add");
-                  }}
-                >
-                  Ajouter
-                </button>{" "}
-                <button
-                  onClick={() => {
-                    updateProgress("replace");
-                  }}
-                >
-                  Remplacer
-                </button>
-              </label>
-            </div>
-            {target_progress && (
-              <Progression progress={data.progress} target={target_progress} />
-            )}
-          </div>
-          <br />
-          <button
-            onClick={() => {
-              setToken(null);
-              setStoriesRead(null);
-              setIsAdmin(false);
-            }}
-          >
-            Se Déconnecter
-          </button>{" "}
-        </>
-      )}
-    </main>
+            <button
+              onClick={() => {
+                setToken(null);
+                setStoriesRead(null);
+                setIsAdmin(false);
+              }}
+            >
+              Se Déconnecter
+            </button>{" "}
+          </>
+        )}
+      </main>
+    </div>
   );
 }

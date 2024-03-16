@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import("../src/assets/storypage.css");
@@ -16,6 +16,7 @@ export default function StoryPage({
   setDisplaySignin,
   writerId,
 }) {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [story, setStory] = useState([]);
   const [reviews, setReviews] = useState([]);
@@ -173,8 +174,15 @@ export default function StoryPage({
             <div className="details">
               <h3>À propos de l'auteur</h3>
               <div>
-                <img className="logo" src={wattpad} alt="logo wattpad" />{" "}
-                {story.writer.writer_details.username}
+                <div
+                  className="writer-btn"
+                  onClick={() => {
+                    navigate(`/writer/${story.writer._id}`);
+                  }}
+                >
+                  <img className="logo" src={wattpad} alt="logo wattpad" />{" "}
+                  {story.writer.writer_details.username}
+                </div>
               </div>
               {story.writer.writer_details.discord && (
                 <div>

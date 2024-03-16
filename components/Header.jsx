@@ -8,6 +8,7 @@ export default function Header({
   displayStoryUpdate,
   displayReview,
   displayContestation,
+  displayStickersSelection,
   token,
 }) {
   return (
@@ -21,6 +22,8 @@ export default function Header({
         : displayReview
         ? document.body.classList.add("scroll-lock")
         : displayContestation
+        ? document.body.classList.add("scroll-lock")
+        : displayStickersSelection
         ? document.body.classList.add("scroll-lock")
         : document.body.classList.remove("scroll-lock")}
       <div className="relative">

@@ -35,6 +35,19 @@
   gap: 15px;
 }
 
+.storypage .writer-btn {
+  /* border: 1px solid white; */
+  padding: 5px 10px 5px 10px;
+  border-radius: 25px;
+  display: flex;
+  transition: 0.5;
+  gap: 5px;
+}
+.storypage .writer-btn:hover {
+  color: #1f2231;
+  background-color: white;
+}
+
 .details > div {
   display: flex;
   gap: 20px;
