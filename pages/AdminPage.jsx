@@ -17,6 +17,7 @@ export default function AdminPage({ token, isAdmin }) {
   const [isloading, setIsloading] = useState(true);
   const [week, setWeek] = useState(null);
   const [careful, setCareful] = useState(false);
+  const [nbAuthors, setNbAuthors] = useState(0);
   useEffect(() => {
     try {
       const Datas = async () => {
@@ -47,6 +48,13 @@ export default function AdminPage({ token, isAdmin }) {
               },
             }
           );
+          let count = 0;
+          for (let a = 0; a < data.authors.length; a++) {
+            if (data.authors[a].status === "Registered") {
+              count++;
+            }
+            setNbAuthors(count);
+          }
           setAuthors(data);
         } catch (error) {
           console.log(error.message);
@@ -565,7 +573,10 @@ export default function AdminPage({ token, isAdmin }) {
         </div>
       </div>
       <div className="bloc2">
-        <h3>Inscriptions validées pour le concours :</h3>
+        <h3>
+          Inscriptions validées pour le concours : {nbAuthors} participants
+          validés
+        </h3>
         <div className="bookContainer">
           {authors &&
             authors.authors.map((author, index) => {
@@ -590,7 +601,11 @@ export default function AdminPage({ token, isAdmin }) {
         </div>
       </div>
       <div className="bloc2">
-        <h3>Inscrits pour le prochain échange d'avis :</h3>
+        <h3>
+          Inscrits pour le prochain échange d'avis :{" "}
+          {data && data[8] && data[8].count > 0 ? data[8].count : "0 "}{" "}
+          participants
+        </h3>
         <div className="bookContainer">
           {data &&
             data[8] &&
@@ -625,7 +640,13 @@ export default function AdminPage({ token, isAdmin }) {
         </div>
       </div>
       <div className="bloc2">
-        <h3>Résultats du tirage d'échanges d'avis :</h3>
+        <h3>
+          Résultats du tirage d'échanges d'avis :{" "}
+          {data[6] && data[6].echange[0]
+            ? data[6].echange[0].draw.length
+            : "0 "}
+          participants
+        </h3>
         <div className="bookContainerWrap">
           {data &&
             data[6] &&
