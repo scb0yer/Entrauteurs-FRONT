@@ -967,7 +967,7 @@ export default function ProfilPage({
                         }, 3500);
                       } else {
                         setDisplayStoryUpdate(true);
-                        setChange(!change);
+                        setToken(token);
                       }
                     }}
                   >
@@ -1123,7 +1123,7 @@ export default function ProfilPage({
                                     book.book_written._id,
                                     book.book_written.isRegistered
                                   );
-                                  setChange(!change);
+                                  setToken(token);
                                 } else {
                                   setWarning(
                                     "Ton compte discord doit être vérifié par un admin pour inscrire ton histoire. Contacte-les sur Discord pour qu'ils valident ton compte."
