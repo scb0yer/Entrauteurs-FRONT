@@ -50,7 +50,7 @@ export default function ProfilPage({
   const [wattpad, setWattpad] = useState();
   const [discord, setDiscord] = useState();
   const [description, setDescription] = useState();
-  const [target_progress, setTargetProgress] = useState();
+  const [target_progress, setTargetProgress] = useState(0);
   const [public_progress, setPublicProgress] = useState(false);
   const [banner, setBanner] = useState(null);
   const [preview, setPreview] = useState("");
@@ -118,7 +118,6 @@ export default function ProfilPage({
               },
             }
           );
-          console.log("MESSAGES", data.messages);
           if (data.concours_id) {
             const response = await axios.get(
               "https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/author",
@@ -619,7 +618,7 @@ export default function ProfilPage({
                   </ul>
                 </div>
                 <div className="avertissement">
-                  <h3>Avertissemments reçus</h3>
+                  <h3>Avertissements reçus</h3>
                   {data.warnings.length === 0 ? (
                     <div>Tu n'as reçu aucun avertissement pour le moment.</div>
                   ) : (
@@ -1263,7 +1262,7 @@ export default function ProfilPage({
                   </button>
                 </label>
               </div>
-              {target_progress && (
+              {target_progress > 0 && (
                 <Progression
                   progress={data.progress}
                   target={target_progress}

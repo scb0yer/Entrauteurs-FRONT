@@ -201,14 +201,18 @@ export default function HomePage({
                           key={index}
                         >
                           <div>
-                            <div className="wattpad">
-                              {writer.writer_details.username.slice(0, 1)}
-                            </div>
-                            <span>
-                              {writer.writer_details.username.slice(1, 13)}
-                              {writer.writer_details.username.slice(13) &&
-                                "..."}
-                            </span>
+                            <Link to={`/writer/${writer._id}`}>
+                              <div className="link-name">
+                                <div className="wattpad">
+                                  {writer.writer_details.username.slice(0, 1)}
+                                </div>
+                                <span>
+                                  {writer.writer_details.username.slice(1, 13)}
+                                  {writer.writer_details.username.slice(13) &&
+                                    "..."}
+                                </span>
+                              </div>
+                            </Link>
                           </div>
                           <div>
                             {writer.writer_details.discord && (

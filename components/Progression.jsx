@@ -153,7 +153,7 @@ export default function Progression({ progress, target }) {
               <div className="bars">
                 {daysTab.map((day, index) => {
                   const percent = (day.count / target) * 200;
-                  const large = 70 / daysLength;
+                  const large = 60 / daysLength;
                   return (
                     <div key={index}>
                       <div
@@ -190,7 +190,7 @@ export default function Progression({ progress, target }) {
               <div className="bars">
                 {monthsTab.map((month, index) => {
                   const percent = (month.count / monthTarget) * 200;
-                  const large = 70 / 12;
+                  const large = 60 / 12;
                   return (
                     <div key={index}>
                       <div

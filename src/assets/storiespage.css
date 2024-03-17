@@ -1,0 +1,92 @@
+.storiesPage .filter {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px white solid;
+  position: sticky;
+  top: 120px;
+  background-color: #1f2231;
+  z-index: 1;
+}
+.storiesPage .filter > div:first-child {
+  width: 400px;
+}
+.storiesPage .filter .mature {
+  width: 150px;
+  font-size: 15px;
+}
+.storiesPage .filter .category-filter {
+  width: 150px;
+  font-size: 15px;
+  text-align: center;
+}
+.storiesPage .filter .note-filter {
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.storiesPage .filter .note {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 5px;
+  margin-left: 5px;
+  justify-content: space-between;
+}
+.storiesPage .writtenStories {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.storiesPage .writtenStories .storyDetails {
+  display: flex;
+}
+
+.storiesPage .writtenStories .storyDetails > div:first-child {
+  width: 150px;
+}
+
+.storiesPage .writtenStories .storyDetails .storyDetails_right {
+  flex: 1;
+  padding: 15px;
+  inline-size: 100%;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  text-align: justify;
+}
+
+.storiesPage .writtenStories .storyDetails .writerDetails {
+  width: 250px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  border: 1px white dashed;
+  border-radius: 10px;
+}
+.storiesPage .writtenStories .discord {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.storiesPage .writtenStories .discord > img {
+  width: 25px;
+}
+.storiesPage .writtenStories .pictos-networks {
+  width: 40px;
+  border-radius: 50%;
+}
+.storiesPage .writtenStories .socialLinks {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.storiesPage .btn-more {
+  display: flex;
+  justify-content: center;
+}

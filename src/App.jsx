@@ -134,7 +134,10 @@ function App() {
           element={<AdminPage token={token} isAdmin={isAdmin} />}
         />
         <Route path="/concept" element={<ConceptPage />} />
-        <Route path="/stories" element={<StoriesPage />} />
+        <Route
+          path="/stories"
+          element={<StoriesPage storiesRead={storiesRead} />}
+        />
         <Route path="/cookies" element={<CookiesPage />} />
         <Route path="/mentionslegales" element={<MentionsLegalesPage />} />
         <Route

@@ -51,7 +51,7 @@
   margin: auto;
   position: absolute;
   left: 35%;
-  bottom: 3px;
+  bottom: 6px;
   text-align: center;
   padding: 5px;
   border-top: 1px black solid;
@@ -89,6 +89,7 @@
   text-align: justify;
   overflow-wrap: break-word;
   hyphens: auto;
+  font-size: 17px;
 }
 
 .writer-page .section1 .social-networks {

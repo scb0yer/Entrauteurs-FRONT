@@ -291,7 +291,7 @@ export default function WriterPage({
               </div>
             </div>
           </section>
-          {data.public_progress && data.target_progress && (
+          {data.public_progress && data.target_progress > 0 && (
             <section className="section2">
               <h3>Progression</h3>
               <Progression
