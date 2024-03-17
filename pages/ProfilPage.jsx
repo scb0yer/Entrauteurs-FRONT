@@ -143,7 +143,7 @@ export default function ProfilPage({
               }
             }
           }
-          if (data.messages) {
+          if (data.messages.length > 0) {
             setDisplayStickersReceived(true);
           }
           const today = new Date();

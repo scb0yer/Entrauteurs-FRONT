@@ -37,7 +37,7 @@ export default function StickersReceived({
           event.stopPropagation();
         }}
       >
-        <h3>Clique sur le sticker que tu veux envoyer !</h3>
+        <h3>Quelqu'un a pensé à toi !</h3>
         <div className="stickersList">
           {messages.map((message, index) => {
             return (
