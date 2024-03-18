@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import AlertDisplay from "../components/Alert";
 import("../src/assets/stickersmodal.css");
+import { Link } from "react-router-dom";
 
 export default function StickersReceived({
   token,
@@ -41,11 +42,10 @@ export default function StickersReceived({
         <div className="stickersList">
           {messages.map((message, index) => {
             return (
-              <a
+              <Link
                 className="sticker-received"
                 key={index}
-                href={`/writer/${message.sender_id}`}
-                target="_blank"
+                to={`/writer/${message.sender_id}`}
               >
                 {message.sender} t'a envoyé :
                 <img
@@ -56,7 +56,7 @@ export default function StickersReceived({
                     sendSticker({ message: message });
                   }}
                 />
-              </a>
+              </Link>
             );
           })}
         </div>

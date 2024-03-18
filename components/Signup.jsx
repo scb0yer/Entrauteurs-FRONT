@@ -26,7 +26,7 @@ export default function Signup({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [description, setDescription] = useState("");
-  const [target_progress, setTargetProgress] = useState("");
+  const [target_progress, setTargetProgress] = useState(0);
   const [mature, setMature] = useState(false);
   const [banner, setBanner] = useState(null);
   const [preview, setPreview] = useState("");
