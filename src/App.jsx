@@ -125,6 +125,7 @@ function App() {
               storiesRead={storiesRead}
               setDisplayStickersSelection={setDisplayStickersSelection}
               setRecipientId={setRecipientId}
+              setDisplaySignin={setDisplaySignin}
             />
           }
         />

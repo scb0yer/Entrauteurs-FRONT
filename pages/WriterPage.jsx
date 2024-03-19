@@ -18,6 +18,7 @@ export default function WriterPage({
   storiesRead,
   setDisplayStickersSelection,
   setRecipientId,
+  setDisplaySignin,
 }) {
   const [alert, setAlert] = useState(false);
   const [warning, setWarning] = useState();
@@ -131,8 +132,12 @@ export default function WriterPage({
                 <div>
                   <button
                     onClick={() => {
-                      setRecipientId(data._id);
-                      setDisplayStickersSelection(true);
+                      if (token) {
+                        setRecipientId(data._id);
+                        setDisplayStickersSelection(true);
+                      } else {
+                        setDisplaySignin(true);
+                      }
                     }}
                   >
                     Envoyer un sticker

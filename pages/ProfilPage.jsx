@@ -1128,7 +1128,8 @@ export default function ProfilPage({
                           >
                             Modifier
                           </button>
-                          {data.concours_id.status !== "Active" &&
+                          {data.concours_id &&
+                            data.concours_id.status !== "Active" &&
                             book.book_written.statusForConcours !== "Pending" &&
                             book.book_written.statusForConcours !==
                               "Registered" && (
