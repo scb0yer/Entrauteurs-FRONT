@@ -550,7 +550,7 @@ export default function ProfilPage({
                 </div>
               )}
             </div>
-            <div className="bloc1">
+            <div className="bloc1 column-xs">
               <div className="column1">
                 <div className="infos">
                   <h3>Infos</h3>
@@ -1265,22 +1265,26 @@ export default function ProfilPage({
                 </label>
               </div>
               {target_progress > 0 && (
-                <Progression
-                  progress={data.progress}
-                  target={target_progress}
-                />
+                <div className="invisible-xs">
+                  <Progression
+                    progress={data.progress}
+                    target={target_progress}
+                  />
+                </div>
               )}
             </div>
             <br />
-            <button
-              onClick={() => {
-                setToken(null);
-                setStoriesRead(null);
-                setIsAdmin(false);
-              }}
-            >
-              Se Déconnecter
-            </button>{" "}
+            <div className="logout">
+              <button
+                onClick={() => {
+                  setToken(null);
+                  setStoriesRead(null);
+                  setIsAdmin(false);
+                }}
+              >
+                Se Déconnecter
+              </button>{" "}
+            </div>
           </>
         )}
       </main>

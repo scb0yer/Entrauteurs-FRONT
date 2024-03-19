@@ -16,6 +16,8 @@ import {
   faCheck,
   faPause,
   faXmark,
+  faUser,
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
   faQuoteLeft,
@@ -30,7 +32,9 @@ library.add(
   faImage,
   faCheck,
   faPause,
-  faXmark
+  faXmark,
+  faUser,
+  faBars
 );
 import Header from "../components/Header";
 import HomePage from "../pages/HomePage";

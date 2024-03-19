@@ -102,7 +102,7 @@ export default function StoriesPage({ storiesRead }) {
                 />
               )}
             </div>
-            <div className="mature">
+            <div className="mature invisible-xs">
               Histoires avec du contenu mature ?{" "}
               {!mature ? (
                 <input
@@ -123,7 +123,7 @@ export default function StoriesPage({ storiesRead }) {
                 />
               )}
             </div>
-            <div className="category-filter">
+            <div className="category-filter invisible-xs">
               <label>
                 Catégorie :{" "}
                 <select
@@ -214,6 +214,46 @@ export default function StoriesPage({ storiesRead }) {
                       setSearch(!search);
                     }}
                   />
+                </label>
+              </div>
+            </div>
+            <div className="invisible-l">
+              <div className="mature">
+                Histoires avec du contenu mature ?{" "}
+                {!mature ? (
+                  <input
+                    type="checkbox"
+                    checked
+                    onChange={() => {
+                      setMature("no");
+                      setSearch(!search);
+                    }}
+                  />
+                ) : (
+                  <input
+                    type="checkbox"
+                    onChange={() => {
+                      setMature("");
+                      setSearch(!search);
+                    }}
+                  />
+                )}
+              </div>
+              <div className="category-filter">
+                <label>
+                  Catégorie :{" "}
+                  <select
+                    id="category"
+                    onChange={(event) => {
+                      setCategory(event.target.value);
+                      setSearch(!search);
+                    }}
+                  >
+                    <option value="">Catégories</option>
+                    <option value="Imaginaire">Imaginaire</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Autre">Autre</option>
+                  </select>
                 </label>
               </div>
             </div>

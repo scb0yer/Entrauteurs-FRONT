@@ -84,12 +84,18 @@ export default function HomePage({
                 d'écriture ou ateliers, partage ta progression...
               </div>
               <div>
-                <button>En savoir plus...</button>
+                <button
+                  onClick={() => {
+                    navigate("/concept");
+                  }}
+                >
+                  En savoir plus...
+                </button>
               </div>
             </div>
           </section>
           <section>
-            <div className="first-bloc">
+            <div className="first-bloc invisible-xs">
               <div className="left-col">
                 <div>
                   {/* -------------Container Résultats du concours------------- */}
@@ -238,7 +244,7 @@ export default function HomePage({
           </section>
           <br />
           <section>
-            <div className="recentlyAdded">
+            <div className="recentlyAdded invisible-xs">
               <h3>Histoires récemment ajoutées</h3>
               <br />
               <div className="containerWithAngles">

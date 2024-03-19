@@ -274,3 +274,38 @@
   flex-direction: column;
   justify-content: space-evenly;
 }
+
+.profil .logout {
+  display: flex;
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+@media (max-width: 500px) {
+  main {
+    width: 90vw;
+  }
+  .profil .column-xs {
+    flex-direction: column-reverse;
+    font-size: 17px;
+    line-height: 21px;
+  }
+  .profil .column-xs .column1 {
+    width: 100%;
+  }
+  .profil .column-xs .column2 {
+    width: 100%;
+  }
+  .invisible-xs {
+    display: none;
+  }
+  .profil .progression .settings {
+    flex-direction: column;
+  }
+  .profil .storyDetails {
+    flex-direction: column;
+  }
+  .profil h2 {
+    font-size: 20px;
+  }
+}

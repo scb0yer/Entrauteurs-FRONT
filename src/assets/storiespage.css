@@ -90,3 +90,31 @@
   display: flex;
   justify-content: center;
 }
+
+@media (max-width: 500px) {
+  .storiesPage .filter {
+    flex-direction: column;
+  }
+  .storiesPage .filter > div:first-child {
+    width: 90vw;
+  }
+  .storiesPage .invisibe-xs {
+    display: none;
+  }
+  .storiesPage .filter .note-filter {
+    display: none;
+  }
+  .storiesPage .storyDetails {
+    flex-direction: column;
+    align-items: center;
+  }
+  .storiesPage .invisible-l {
+    display: flex;
+    margin-bottom: 10px;
+  }
+}
+@media (min-width: 501px) {
+  .storiesPage .invisible-l {
+    display: none;
+  }
+}
