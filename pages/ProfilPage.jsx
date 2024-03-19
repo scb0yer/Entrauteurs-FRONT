@@ -218,7 +218,7 @@ export default function ProfilPage({
       } else {
         setIsLoading(true);
         const formData = new FormData();
-        formData.append("banner", banner);
+        formData.append("picture", banner);
         formData.append("facebook", facebook);
         formData.append("instagram", instagram);
         formData.append("discord", discord);
@@ -226,9 +226,7 @@ export default function ProfilPage({
         formData.append("public_progress", public_progress);
         formData.append("target_progress", target_progress);
         formData.append("mature", mature);
-        console.log("BANNER", banner);
-        console.log("discord", discord);
-        console.log("target_progress", target_progress);
+        console.log(banner);
         const { data } = await axios.post(
           "https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/writer/update",
           formData,
