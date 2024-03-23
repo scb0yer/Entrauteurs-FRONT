@@ -79,7 +79,6 @@ export default function Progression({ progress, target }) {
     }
   }, [year]);
   useEffect(() => {
-    console.log("PROGRESS", progress);
     try {
       for (let y = 0; y < progress.length; y++) {
         if (progress[y].year.index === year) {
@@ -119,7 +118,6 @@ export default function Progression({ progress, target }) {
             }
           }
           setMonthsTab(newMonthsTab);
-          console.log("NEWMONTHTAB", newMonthsTab);
         }
       }
     } catch (error) {
@@ -159,7 +157,7 @@ export default function Progression({ progress, target }) {
                       <div
                         style={{
                           position: percent > 400 ? "absolute" : "relative",
-                          bottom: percent > 400 ? "380px" : "0px",
+                          bottom: percent > 400 ? "375px" : "0px",
                           textAlign: "center",
                           color: !day.count ? "#1F2231" : "white",
                         }}
@@ -196,7 +194,7 @@ export default function Progression({ progress, target }) {
                       <div
                         style={{
                           position: percent > 400 ? "absolute" : "relative",
-                          bottom: percent > 400 ? "380px" : "0px",
+                          bottom: percent > 400 ? "375px" : "0px",
                           textAlign: "center",
                           color: !month.count ? "#1F2231" : "white",
                         }}

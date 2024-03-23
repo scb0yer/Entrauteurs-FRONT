@@ -12,8 +12,26 @@
   align-items: center;
   text-align: center;
   padding: 10px;
+  overflow-y: scroll;
 }
-
+.adminpage .bloc1 .left-col .send-stickers {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.adminpage .bloc1 .left-col .send-stickers > img {
+  width: 100px;
+}
+.adminpage .bloc1 .left-col .stickers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.adminpage .bloc1 .left-col .stickers > img {
+  width: 20%;
+}
 .adminpage .bloc1 .right-col {
   flex: 1;
   gap: 30px;
@@ -112,6 +130,7 @@
   font-weight: 400;
   font-style: normal;
   font-size: 19px;
+  white-space: nowrap;
 }
 .adminpage .bloc2 .bookContainer {
   width: 100%;
@@ -221,4 +240,17 @@
 }
 .adminpage .bloc2 .to-dissmiss:hover {
   background-color: #991313;
+}
+
+.adminpage .bloc2 .categoryContainer {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  border-bottom: white 1px dashed;
+}
+.adminpage .bloc2 .categoryContainer > h4 {
+  width: 120px;
+}
+.adminpage .bloc2 .categoryContainer > div {
+  width: 130px;
 }

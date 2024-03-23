@@ -18,6 +18,27 @@ export default function AdminPage({ token, isAdmin }) {
   const [week, setWeek] = useState(null);
   const [careful, setCareful] = useState(false);
   const [nbAuthors, setNbAuthors] = useState(0);
+  const [displayStickers, setDisplayStickers] = useState(false);
+  const messagesList = [
+    "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156856/entrauteurs/messages/wine_qphgtq.gif",
+    "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156856/entrauteurs/messages/typing_fsoncc.gif",
+    "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156856/entrauteurs/messages/tired-sleep_ud0nnn.gif",
+    "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156855/entrauteurs/messages/thanks_cvl5nn.gif",
+    "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156855/entrauteurs/messages/search_swa11z.gif",
+    "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156855/entrauteurs/messages/sad_boybdk.gif",
+    "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156854/entrauteurs/messages/penguin-ganbatte_lr9kbf.gif",
+    "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156854/entrauteurs/messages/miss-you_rwokmy.gif",
+    "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156854/entrauteurs/messages/mad-angry_nbbbo5.gif",
+    "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156853/entrauteurs/messages/kisses_d3p7ym.gif",
+    "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156853/entrauteurs/messages/luck_sbj71c.gif",
+    "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156853/entrauteurs/messages/hello_dxk6rc.gif",
+    "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156852/entrauteurs/messages/dream-it-do-it_dwzxql.gif",
+    "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156852/entrauteurs/messages/coffee_cfar5r.gif",
+    "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156852/entrauteurs/messages/clap_dqgpor.gif",
+    "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156852/entrauteurs/messages/cat-computer_xrwklq.gif",
+    "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156852/entrauteurs/messages/angry-typing_o3p993.gif",
+    "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156852/entrauteurs/messages/birthday_s0oxux.gif",
+  ];
   useEffect(() => {
     try {
       const Datas = async () => {
@@ -35,9 +56,9 @@ export default function AdminPage({ token, isAdmin }) {
             setWeek(data[7].concours.weeks[data[7].concours.weeks.length - 1]);
           }
         }
-        console.log(data[1].pendingWriters);
       };
       Datas();
+      console.log("DATA", data);
       const getAuthors = async () => {
         try {
           const { data } = await axios.get(
@@ -67,6 +88,33 @@ export default function AdminPage({ token, isAdmin }) {
       setIsloading(false);
     }
   }, [change]);
+
+  const sendSticker = async (message) => {
+    try {
+      const { data } = await axios.post(
+        `https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/admin/sendMessage`,
+        message,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setWarning("Le sticker a bien été envoyé à tous les auteurs actifs !");
+      setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+        setDisplayStickers(false);
+      }, 3000);
+    } catch (error) {
+      console.log(error.message);
+      setWarning("Une erreur s'est produite.");
+      setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+      }, 3000);
+    }
+  };
 
   const updateWriter = async (id, req) => {
     try {
@@ -377,6 +425,38 @@ export default function AdminPage({ token, isAdmin }) {
               </button>
             )}
           </div>
+          <div className="send-stickers">
+            <img
+              src={
+                "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156853/entrauteurs/messages/hello_dxk6rc.gif"
+              }
+              alt="sticker"
+            />
+            <button
+              onClick={() => {
+                setDisplayStickers(!displayStickers);
+              }}
+            >
+              Envoyer un sticker à tous les auteurs
+            </button>
+            <br />
+            {displayStickers && (
+              <div className="stickers">
+                {messagesList.map((message, index) => {
+                  return (
+                    <img
+                      key={index}
+                      src={message}
+                      alt="sticker"
+                      onClick={() => {
+                        sendSticker({ message: message });
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
         <div className="right-col">
           {/* ------------ Nouveaux auteurs à valider ------------ */}
@@ -587,7 +667,10 @@ export default function AdminPage({ token, isAdmin }) {
                     className="book2"
                     style={{ height: "200px" }}
                   >
-                    <div className="writer2">{author.account.username}</div>
+                    <div className="writer2">
+                      {author.account.username.slice(0, 10)}
+                      {author.account.username.slice(10) && "..."}
+                    </div>
                     <BookImg
                       story_cover={author.story_details.story_cover}
                       story_title={author.story_details.story_title}
@@ -603,37 +686,134 @@ export default function AdminPage({ token, isAdmin }) {
       <div className="bloc2">
         <h3>
           Inscrits pour le prochain échange d'avis :{" "}
-          {data && data[8] && data[8].count > 0 ? data[8].count : "0 "}{" "}
-          participants
+          {data && data[8] && data[8].count > 0 ? data[8].count : "0 "}
+          {" participants"}
         </h3>
-        <div className="bookContainer">
-          {data &&
-            data[8] &&
-            data[8].count > 0 &&
-            data[8].writersRegistered.map((book, index) => {
-              return (
-                <div
-                  key={index}
-                  className="book2"
-                  style={{ height: "220px", textAlign: "center" }}
-                >
-                  <Link className="writer2">
-                    <div>{book.writer.writer_details.username}</div>
-                    {book.writer.writer_details.discord && (
-                      <div>({book.writer.writer_details.discord})</div>
-                    )}
-                  </Link>
-                  <div>{book.story_details.story_cat}</div>
-                  <BookImg
-                    story_cover={book.story_details.story_cover}
-                    story_title={book.story_details.story_title}
-                    story_url={book.story_details.story_url}
-                    story_id={book._id}
-                    size={120}
-                  />
-                </div>
-              );
-            })}
+        <div className="bookContainer2">
+          <div className="categoryContainer">
+            <h4>Romance</h4>
+            {data &&
+              data[8] &&
+              data[8].count > 0 &&
+              data[8].writersRegistered.map((book, index) => {
+                return (
+                  book.story_details.story_cat === "Romance" && (
+                    <div
+                      key={index}
+                      className="book2"
+                      style={{ height: "240px", textAlign: "center" }}
+                    >
+                      <Link className="writer2">
+                        <div>
+                          {book.writer.writer_details.username.slice(0, 10)}
+                          {book.writer.writer_details.username.slice(10) &&
+                            "..."}
+                        </div>
+                        {book.writer.writer_details.discord && (
+                          <div>
+                            ({book.writer.writer_details.discord.slice(0, 10)}
+                            {book.writer.writer_details.discord.slice(10) &&
+                              "..."}
+                            )
+                          </div>
+                        )}
+                      </Link>
+                      <div>{book.story_details.story_cat}</div>
+                      <BookImg
+                        story_cover={book.story_details.story_cover}
+                        story_title={book.story_details.story_title}
+                        story_url={book.story_details.story_url}
+                        story_id={book._id}
+                        size={140}
+                      />
+                    </div>
+                  )
+                );
+              })}
+          </div>
+          <div className="categoryContainer">
+            <h4>Imaginaire</h4>
+            {data &&
+              data[8] &&
+              data[8].count > 0 &&
+              data[8].writersRegistered.map((book, index) => {
+                return (
+                  book.story_details.story_cat === "Imaginaire" && (
+                    <div
+                      key={index}
+                      className="book2"
+                      style={{ height: "240px", textAlign: "center" }}
+                    >
+                      <Link className="writer2">
+                        <div>
+                          {book.writer.writer_details.username.slice(0, 10)}
+                          {book.writer.writer_details.username.slice(10) &&
+                            "..."}
+                        </div>
+                        {book.writer.writer_details.discord && (
+                          <div>
+                            ({book.writer.writer_details.discord.slice(0, 10)}
+                            {book.writer.writer_details.discord.slice(10) &&
+                              "..."}
+                            )
+                          </div>
+                        )}
+                      </Link>
+                      <div>{book.story_details.story_cat}</div>
+                      <BookImg
+                        story_cover={book.story_details.story_cover}
+                        story_title={book.story_details.story_title}
+                        story_url={book.story_details.story_url}
+                        story_id={book._id}
+                        size={140}
+                      />
+                    </div>
+                  )
+                );
+              })}
+          </div>
+          <div className="categoryContainer">
+            <h4>Autre</h4>
+            {data &&
+              data[8] &&
+              data[8].count > 0 &&
+              data[8].writersRegistered.map((book, index) => {
+                return (
+                  book.story_details.story_cat === "Autre" && (
+                    <div
+                      key={index}
+                      className="book2"
+                      style={{ height: "240px", textAlign: "center" }}
+                    >
+                      <Link className="writer2">
+                        <div>
+                          {book.writer.writer_details.username.slice(0, 10)}
+                          {book.writer.writer_details.username.slice(10) &&
+                            "..."}
+                        </div>
+                        {book.writer.writer_details.discord && (
+                          <div>
+                            ({book.writer.writer_details.discord.slice(0, 10)}
+                            {book.writer.writer_details.discord.slice(10) &&
+                              "..."}
+                            )
+                          </div>
+                        )}
+                      </Link>
+                      <div>{book.story_details.story_cat}</div>
+                      <BookImg
+                        story_cover={book.story_details.story_cover}
+                        story_title={book.story_details.story_title}
+                        story_url={book.story_details.story_url}
+                        story_id={book._id}
+                        size={140}
+                      />
+                    </div>
+                  )
+                );
+              })}
+          </div>
+
           {data && data[8] && data[8].count === 0 && (
             <div>Aucun inscrit pour l'échange d'avis</div>
           )}

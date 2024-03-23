@@ -94,7 +94,7 @@
   margin: auto;
   position: absolute;
   left: 35%;
-  bottom: 3px;
+  bottom: 7px;
   text-align: center;
   padding: 5px;
   border-top: 1px black solid;
@@ -113,6 +113,22 @@
 
 .profil .admin > button {
   width: 200px;
+}
+.profil .birthdays {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  width: 100%;
+  gap: 30px;
+}
+.profil .birthdays img {
+  width: 150px;
+}
+.profil .birthdays > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .profil .book {
   width: 150px;
@@ -195,6 +211,9 @@
   flex-direction: column;
   gap: 10px;
   overflow-y: scroll;
+  inline-size: 40%;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .profil .infos {
@@ -219,6 +238,20 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  inline-size: 60%;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.profil .bloc1 .column2 .books-registered {
+  display: flex;
+}
+
+.profil .bloc1 .column2 .bookmark {
+  position: absolute;
+  top: 0px;
+  right: 20px;
+  z-index: 5;
 }
 
 .profil .presentation {

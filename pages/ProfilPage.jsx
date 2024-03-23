@@ -60,6 +60,8 @@ export default function ProfilPage({
   const [exchange, setExchange] = useState(false);
   const [session, setSession] = useState(false);
   const [newProgress, setNewProgress] = useState();
+  const [booksRegistered, setBooksRegistered] = useState([]);
+  const [birthdays, setBirthdays] = useState([]);
   const [displayStickersReceived, setDisplayStickersReceived] = useState(false);
   const rating = [0, 1, 2, 3, 4];
 
@@ -90,8 +92,8 @@ export default function ProfilPage({
                 borderBottom: "1px solid black",
               }}
             />
-          ) : data.banner ? (
-            <img src={data.banner} alt="couverture" />
+          ) : data.writer.banner ? (
+            <img src={data.writer.banner} alt="couverture" />
           ) : (
             <img src={defaultBanner} alt="couverture" />
           )}
@@ -118,7 +120,7 @@ export default function ProfilPage({
               },
             }
           );
-          if (data.concours_id) {
+          if (data.writer.concours_id) {
             const response = await axios.get(
               "https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/author",
               {
@@ -135,14 +137,17 @@ export default function ProfilPage({
               setAlreadyVoted(true);
             }
           }
-          if (data.stories_written) {
-            for (let s = 0; s < data.stories_written.length; s++) {
-              if (data.stories_written[s].book_written.isRegistered === "Yes") {
+          if (data.writer.stories_written) {
+            for (let s = 0; s < data.writer.stories_written.length; s++) {
+              if (
+                data.writer.stories_written[s].book_written.isRegistered ===
+                "Yes"
+              ) {
                 setExchange(true);
               }
             }
           }
-          if (data.messages.length > 0) {
+          if (data.writer.messages.length > 0) {
             setDisplayStickersReceived(true);
           }
           const today = new Date();
@@ -151,14 +156,14 @@ export default function ProfilPage({
           const day2 = today.getUTCDate();
           const minYear = year2 - 18;
           const majeurDate = new Date(minYear, month2, day2);
-          const birthdate = new Date(data.writer_details.birthdate);
+          const birthdate = new Date(data.writer.writer_details.birthdate);
           if (birthdate < majeurDate) {
             setAdult(true);
           } else {
             setAdult(false);
           }
           const storiesWritten = await axios.get(
-            `https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/books?writer_id=${data._id}`,
+            `https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/books?writer_id=${data.writer._id}`,
             {
               headers: {
                 authorization: `Bearer ${token}`,
@@ -186,19 +191,23 @@ export default function ProfilPage({
             }
           }
           setPendingReviews(newPendingReviews);
-          console.log(data);
           setData(data);
-          setMature(data.writer_details.mature);
-          setFacebook(data.writer_details.facebook);
-          setInstagram(data.writer_details.instagram);
-          setWattpad(data.writer_details.wattpad);
-          setDiscord(data.writer_details.discord);
-          setBanner(data.banner);
-          setDescription(data.writer_details.description);
-          setTargetProgress(data.target_progress);
-          setPublicProgress(data.public_progress);
-          setIsInExchange(data.isInExchange);
+          setBirthdays(data.birthdays);
+          setMature(data.writer.writer_details.mature);
+          setFacebook(data.writer.writer_details.facebook);
+          setInstagram(data.writer.writer_details.instagram);
+          setWattpad(data.writer.writer_details.wattpad);
+          setDiscord(data.writer.writer_details.discord);
+          setBanner(data.writer.banner);
+          setDescription(data.writer.writer_details.description);
+          setTargetProgress(data.writer.target_progress);
+          setPublicProgress(data.writer.public_progress);
+          setIsInExchange(data.writer.isInExchange);
           setIsLoading(false);
+          const books = await axios.get(
+            "https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/books?isRegistered=Yes"
+          );
+          setBooksRegistered(books.data.results);
         } catch (error) {
           console.log(error.message);
         }
@@ -488,11 +497,11 @@ export default function ProfilPage({
         ? document.body.classList.add("scroll-lock")
         : document.body.classList.remove("scroll-lock")}
       {alert && <AlertDisplay warning={warning} />}
-      {displayStickersReceived && data.messages && (
+      {displayStickersReceived && data.writer.messages && (
         <StickersReceived
           setDisplayStickersReceived={setDisplayStickersReceived}
           token={token}
-          messages={data.messages}
+          messages={data.writer.messages}
         />
       )}
       <main className="profil">
@@ -516,7 +525,7 @@ export default function ProfilPage({
               <div className="name">
                 <div className="wattpad-name">
                   <img className="min-logo" src={logowattpad} alt="Wattpad" />
-                  <div>@{data.writer_details.username}</div>
+                  <div>@{data.writer.writer_details.username}</div>
                   <div style={{ width: "20px" }}></div>
                 </div>
                 <div className="discord-name">
@@ -550,17 +559,51 @@ export default function ProfilPage({
                 </div>
               )}
             </div>
+            {birthdays && birthdays.length > 0 && (
+              <div className="birthdays">
+                <div>
+                  <img
+                    src={
+                      "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156852/entrauteurs/messages/birthday_s0oxux.gif"
+                    }
+                    alt="birthday"
+                  />
+                </div>
+                <div>
+                  <h4>Aujourd'hui, c'est l'anniversaire de ...</h4>
+                  <div>
+                    {birthdays.map((writer, index) => {
+                      return (
+                        <Link to={`/writer/${writer._id}`} key={index}>
+                          {writer.writer_details.username}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                  {birthdays && birthdays.length === 1 ? (
+                    <h4>Envoie-lui un sticker pour le lui fêter !</h4>
+                  ) : (
+                    birthdays &&
+                    birthdays.length > 1 && (
+                      <h4>Envoie-leur un sticker pour le leur fêter !</h4>
+                    )
+                  )}
+                </div>
+              </div>
+            )}
             <div className="bloc1 column-xs">
               <div className="column1">
                 <div className="infos">
                   <h3>Infos</h3>
                   <ul>
-                    <li>Nombre de vues du profil : {data.views}</li>
-                    <li>Role : {data.writer_details.role}</li>
-                    <li>Statut : {data.writer_details.status}</li>
+                    <li>Nombre de vues du profil : {data.writer.views}</li>
+                    <li>Role : {data.writer.writer_details.role}</li>
+                    <li>Statut : {data.writer.writer_details.status}</li>
                     <li>
                       Date de naissance :{" "}
-                      <DisplayDate date={data.writer_details.birthdate} />
+                      <DisplayDate
+                        date={data.writer.writer_details.birthdate}
+                      />
                     </li>
                     <li>
                       <div className="mature">
@@ -615,16 +658,16 @@ export default function ProfilPage({
                       />
                     </li>
                     <li>Lien Wattpad : {wattpad}</li>
-                    <li>Email : {data.connexion_details.email}</li>
+                    <li>Email : {data.writer.connexion_details.email}</li>
                   </ul>
                 </div>
                 <div className="avertissement">
                   <h3>Avertissements reçus</h3>
-                  {data.warnings.length === 0 ? (
+                  {data.writer.warnings.length === 0 ? (
                     <div>Tu n'as reçu aucun avertissement pour le moment.</div>
                   ) : (
                     <div>
-                      Tu as reçu {data.warnings.length} avertissement(s).
+                      Tu as reçu {data.writer.warnings.length} avertissement(s).
                     </div>
                   )}
                   <br />
@@ -637,7 +680,7 @@ export default function ProfilPage({
                   Au bout de 3 avertissements, ton compte est suspendu.
                   <br />
                   <div className="warning">
-                    {data.warnings.map((warning, index) => {
+                    {data.writer.warnings.map((warning, index) => {
                       return (
                         <div key={index}>
                           {warning.admin} : {warning.warning} ({warning.date})
@@ -649,7 +692,7 @@ export default function ProfilPage({
                 <div>
                   <h3>Histoires lues</h3>
                   <div className="readingList">
-                    {data.stories_read.map((book, index) => {
+                    {data.writer.stories_read.map((book, index) => {
                       return (
                         <BookImg
                           key={index}
@@ -720,18 +763,18 @@ export default function ProfilPage({
                       <BookImg
                         className="cover"
                         story_cover={
-                          data.stories_assigned[
-                            data.stories_assigned.length - 1
+                          data.writer.stories_assigned[
+                            data.writer.stories_assigned.length - 1
                           ].book_assigned.story_details.story_cover
                         }
                         story_title={
-                          data.stories_assigned[
-                            data.stories_assigned.length - 1
+                          data.writer.stories_assigned[
+                            data.writer.stories_assigned.length - 1
                           ].book_assigned.story_details.story_title
                         }
                         story_url={
-                          data.stories_assigned[
-                            data.stories_assigned.length - 1
+                          data.writer.stories_assigned[
+                            data.writer.stories_assigned.length - 1
                           ].book_assigned.story_details.story_url
                         }
                         story_id={
@@ -744,33 +787,33 @@ export default function ProfilPage({
                       <div>
                         <h3>
                           {
-                            data.stories_assigned[
-                              data.stories_assigned.length - 1
+                            data.writer.stories_assigned[
+                              data.writer.stories_assigned.length - 1
                             ].book_assigned.story_details.story_title
                           }
                         </h3>
                         <div>
                           {
-                            data.stories_assigned[
-                              data.stories_assigned.length - 1
+                            data.writer.stories_assigned[
+                              data.writer.stories_assigned.length - 1
                             ].book_assigned.story_details.story_cat
                           }{" "}
                           --{" "}
-                          {data.stories_assigned[
-                            data.stories_assigned.length - 1
+                          {data.writer.stories_assigned[
+                            data.writer.stories_assigned.length - 1
                           ].book_assigned.story_details.story_mature
                             ? "Mature"
                             : "Tout public"}{" "}
                         </div>
                         <div>
-                          {data.stories_assigned[
-                            data.stories_assigned.length - 1
+                          {data.writer.stories_assigned[
+                            data.writer.stories_assigned.length - 1
                           ].book_assigned.story_details.story_description.slice(
                             0,
                             200
                           )}
-                          {data.stories_assigned[
-                            data.stories_assigned.length - 1
+                          {data.writer.stories_assigned[
+                            data.writer.stories_assigned.length - 1
                           ].book_assigned.story_details.story_description.slice(
                             201
                           ) && "..."}
@@ -924,68 +967,69 @@ export default function ProfilPage({
                     })}
                   </div>
                 )}
-                {data.concours_id && data.concours_id.status === "Active" && (
-                  <div>
-                    <section className="activeSection">
-                      <h2>Concours 🏆 --- Semaine {week}</h2>
-                      <div className="invisible">
-                        <p className="smallText">
-                          Tu as jusqu'à samedi soir pour consacrer une heure de
-                          lecture à chacune de ces histoires, et voter pour
-                          celle que tu préfères.
+                {data.writer.concours_id &&
+                  data.writer.concours_id.status === "Active" && (
+                    <div>
+                      <section className="activeSection">
+                        <h2>Concours 🏆 --- Semaine {week}</h2>
+                        <div className="invisible">
+                          <p className="smallText">
+                            Tu as jusqu'à samedi soir pour consacrer une heure
+                            de lecture à chacune de ces histoires, et voter pour
+                            celle que tu préfères.
+                          </p>
+                          <p className="smallText">
+                            Attention, une fois que tu as voté, tu ne peux plus
+                            revenir en arrière.
+                          </p>
+                          <p className="smallText">
+                            Si tu ne votes pas, tu auras une pénalité de deux
+                            points.
+                          </p>
+                          <p className="smallText">
+                            Quand la semaine sera terminée (dimanche dans la
+                            matinée), deux nouvelles histoires apparaitront.
+                          </p>
+                        </div>
+                        <br />
+                        <p>
+                          Clique sur la couverture du livre pour le lire (sur
+                          wattpad).
                         </p>
-                        <p className="smallText">
-                          Attention, une fois que tu as voté, tu ne peux plus
-                          revenir en arrière.
-                        </p>
-                        <p className="smallText">
-                          Si tu ne votes pas, tu auras une pénalité de deux
-                          points.
-                        </p>
-                        <p className="smallText">
-                          Quand la semaine sera terminée (dimanche dans la
-                          matinée), deux nouvelles histoires apparaitront.
-                        </p>
-                      </div>
-                      <br />
-                      <p>
-                        Clique sur la couverture du livre pour le lire (sur
-                        wattpad).
-                      </p>
-                      <br />
-                      <div className="vote">
-                        {storiesAssigned.map((story, index) => {
-                          return (
-                            <div key={index}>
-                              <BookImg
-                                story_cover={story.story_cover}
-                                story_title={story.story_title}
-                                story_url={story.story_url}
-                                size={200}
-                              />
-                              {!alreadyVoted && (
-                                <button
-                                  onClick={() => {
-                                    vote(story.story_id);
-                                  }}
-                                >
-                                  Voter pour {story.story_title.slice(0, 15)}
-                                  {story.story_title.slice(16) && "..."}
-                                </button>
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </section>
-                  </div>
-                )}
+                        <br />
+                        <div className="vote">
+                          {storiesAssigned.map((story, index) => {
+                            return (
+                              <div key={index}>
+                                <BookImg
+                                  story_cover={story.story_cover}
+                                  story_title={story.story_title}
+                                  story_url={story.story_url}
+                                  size={200}
+                                />
+                                {!alreadyVoted && (
+                                  <button
+                                    onClick={() => {
+                                      vote(story.story_id);
+                                    }}
+                                  >
+                                    Voter pour {story.story_title.slice(0, 15)}
+                                    {story.story_title.slice(16) && "..."}
+                                  </button>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </section>
+                    </div>
+                  )}
                 <div className="writtenStories">
                   <div className="addStory">
                     <h3>Histoires écrites</h3>
                     <button
                       onClick={() => {
-                        if (data.writer_details.status === "Pending") {
+                        if (data.writer.writer_details.status === "Pending") {
                           setWarning(
                             "Ton compte doit d'abord être validé pour que tu puisses ajouter une histoire. Cela se fait généralement en moins de 24h."
                           );
@@ -1002,7 +1046,7 @@ export default function ProfilPage({
                       Ajouter une histoire
                     </button>
                   </div>
-                  {data.stories_written.map((book, index) => {
+                  {data.writer.stories_written.map((book, index) => {
                     let half = false;
                     if (
                       book.book_written.note -
@@ -1126,14 +1170,14 @@ export default function ProfilPage({
                           >
                             Modifier
                           </button>
-                          {data.concours_id &&
-                            data.concours_id.status !== "Active" &&
+                          {data.writer.concours_id &&
+                            data.writer.concours_id.status !== "Active" &&
                             book.book_written.statusForConcours !== "Pending" &&
                             book.book_written.statusForConcours !==
                               "Registered" && (
                               <button
                                 onClick={() => {
-                                  if (data.discord_checked) {
+                                  if (data.writer.discord_checked) {
                                     registerToSession(
                                       book.book_written.story_details
                                         .story_title,
@@ -1159,7 +1203,7 @@ export default function ProfilPage({
                             book.book_written.isRegistered === "No" && (
                               <button
                                 onClick={() => {
-                                  if (data.discord_checked) {
+                                  if (writer.discord_checked) {
                                     registerToExchange(
                                       book.book_written._id,
                                       book.book_written.isRegistered
@@ -1180,6 +1224,61 @@ export default function ProfilPage({
                               </button>
                             )}
                         </div>
+                        {book.book_written.isRegistered === "Yes" && (
+                          <div>
+                            <h4>
+                              Ton histoire est inscrite au concours dans la même
+                              catégorie que celles ci-dessous. N'oublie pas de
+                              marquer comme lues celles que tu as déjà lues pour
+                              ne pas tomber dessus lors du tirage !
+                            </h4>
+                            <div className="books-registered">
+                              {booksRegistered.map((story, ref) => {
+                                let isAlreadyRead = false;
+                                if (readList) {
+                                  for (let s = 0; s < readList.length; s++) {
+                                    if (readList[s].book_read === story._id) {
+                                      isAlreadyRead = true;
+                                    }
+                                  }
+                                }
+
+                                return (
+                                  story.story_details.story_cat ===
+                                    book.book_written.story_details.story_cat &&
+                                  story._id !== book.book_written._id && (
+                                    <div
+                                      style={{ position: "relative" }}
+                                      key={ref}
+                                    >
+                                      {isAlreadyRead && (
+                                        <FontAwesomeIcon
+                                          className="bookmark"
+                                          icon="bookmark"
+                                          size="xl"
+                                          color="white"
+                                        />
+                                      )}
+                                      <BookImg
+                                        story_cover={
+                                          story.story_details.story_cover
+                                        }
+                                        story_title={
+                                          story.story_details.story_title
+                                        }
+                                        story_url={
+                                          story.story_details.story_url
+                                        }
+                                        story_id={story._id}
+                                        size={150}
+                                      />
+                                    </div>
+                                  )
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     );
                   })}
@@ -1267,7 +1366,7 @@ export default function ProfilPage({
               {target_progress > 0 && (
                 <div className="invisible-xs">
                   <Progression
-                    progress={data.progress}
+                    progress={data.writer.progress}
                     target={target_progress}
                   />
                 </div>
