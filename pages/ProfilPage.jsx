@@ -1213,7 +1213,7 @@ export default function ProfilPage({
                             book.book_written.isRegistered === "No" && (
                               <button
                                 onClick={() => {
-                                  if (writer.discord_checked) {
+                                  if (data.writer.discord_checked) {
                                     registerToExchange(
                                       book.book_written._id,
                                       book.book_written.isRegistered
