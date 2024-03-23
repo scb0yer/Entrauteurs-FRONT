@@ -87,7 +87,9 @@ button:hover {
 .scroll-lock {
   overflow: hidden;
 }
-
+div::-webkit-scrollbar {
+  display: none;
+}
 .alert {
   position: fixed;
   padding: 20px;
