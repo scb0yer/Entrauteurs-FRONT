@@ -112,7 +112,7 @@ export default function ProfilPage({
             const readBooks = JSON.parse(storiesRead);
             setReadList(readBooks);
           }
-          const { data } = await axios.get(
+          const response1 = await axios.get(
             `https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/writer`,
             {
               headers: {
@@ -120,7 +120,7 @@ export default function ProfilPage({
               },
             }
           );
-          if (data.writer.concours_id) {
+          if (response1.data.writer.concours_id) {
             const response = await axios.get(
               "https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/author",
               {
@@ -137,17 +137,25 @@ export default function ProfilPage({
               setAlreadyVoted(true);
             }
           }
-          if (data.writer.stories_written) {
-            for (let s = 0; s < data.writer.stories_written.length; s++) {
+          if (response1.data.writer.stories_written) {
+            for (
+              let s = 0;
+              s < response1.data.writer.stories_written.length;
+              s++
+            ) {
               if (
-                data.writer.stories_written[s].book_written.isRegistered ===
-                "Yes"
+                response1.data.writer.stories_written[s].book_written
+                  .isRegistered === "Yes"
               ) {
                 setExchange(true);
               }
             }
           }
-          if (data.writer.messages.length > 0) {
+          console.log("MESSAGES", response1.data.writer.messages);
+          if (
+            response1.data.writer.messages &&
+            response1.data.writer.messages.length > 0
+          ) {
             setDisplayStickersReceived(true);
           }
           const today = new Date();
@@ -156,14 +164,16 @@ export default function ProfilPage({
           const day2 = today.getUTCDate();
           const minYear = year2 - 18;
           const majeurDate = new Date(minYear, month2, day2);
-          const birthdate = new Date(data.writer.writer_details.birthdate);
+          const birthdate = new Date(
+            response1.data.writer.writer_details.birthdate
+          );
           if (birthdate < majeurDate) {
             setAdult(true);
           } else {
             setAdult(false);
           }
           const storiesWritten = await axios.get(
-            `https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/books?writer_id=${data.writer._id}`,
+            `https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/books?writer_id=${response1.data.writer._id}`,
             {
               headers: {
                 authorization: `Bearer ${token}`,
@@ -191,18 +201,18 @@ export default function ProfilPage({
             }
           }
           setPendingReviews(newPendingReviews);
-          setData(data);
-          setBirthdays(data.birthdays);
-          setMature(data.writer.writer_details.mature);
-          setFacebook(data.writer.writer_details.facebook);
-          setInstagram(data.writer.writer_details.instagram);
-          setWattpad(data.writer.writer_details.wattpad);
-          setDiscord(data.writer.writer_details.discord);
-          setBanner(data.writer.banner);
-          setDescription(data.writer.writer_details.description);
-          setTargetProgress(data.writer.target_progress);
-          setPublicProgress(data.writer.public_progress);
-          setIsInExchange(data.writer.isInExchange);
+          setData(response1.data);
+          setBirthdays(response1.data.birthdays);
+          setMature(response1.data.writer.writer_details.mature);
+          setFacebook(response1.data.writer.writer_details.facebook);
+          setInstagram(response1.data.writer.writer_details.instagram);
+          setWattpad(response1.data.writer.writer_details.wattpad);
+          setDiscord(response1.data.writer.writer_details.discord);
+          setBanner(response1.data.writer.banner);
+          setDescription(response1.data.writer.writer_details.description);
+          setTargetProgress(response1.data.writer.target_progress);
+          setPublicProgress(response1.data.writer.public_progress);
+          setIsInExchange(response1.data.writer.isInExchange);
           setIsLoading(false);
           const books = await axios.get(
             "https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/books?isRegistered=Yes"
@@ -497,7 +507,7 @@ export default function ProfilPage({
         ? document.body.classList.add("scroll-lock")
         : document.body.classList.remove("scroll-lock")}
       {alert && <AlertDisplay warning={warning} />}
-      {displayStickersReceived && data.writer.messages && (
+      {!isloading && displayStickersReceived && data.writer.messages && (
         <StickersReceived
           setDisplayStickersReceived={setDisplayStickersReceived}
           token={token}
