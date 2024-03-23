@@ -118,7 +118,6 @@
   display: flex;
   justify-content: center;
   padding: 20px;
-  width: 100%;
   gap: 30px;
 }
 .profil .birthdays img {
@@ -314,7 +313,7 @@
   justify-content: center;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 850px) {
   main {
     width: 90vw;
   }

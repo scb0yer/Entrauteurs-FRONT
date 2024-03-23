@@ -160,7 +160,7 @@
   margin-bottom: 30px;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 1100px) {
   .homePage section .invisible-xs {
     display: none;
   }

@@ -504,7 +504,7 @@ export default function ProfilPage({
           messages={data.writer.messages}
         />
       )}
-      <main className="profil">
+      <main className="profil fixedWidth">
         {token && isloading && (
           <div
             style={{

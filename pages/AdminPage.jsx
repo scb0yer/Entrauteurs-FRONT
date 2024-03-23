@@ -373,7 +373,7 @@ export default function AdminPage({ token, isAdmin }) {
       <Loading isLoading={isloading} />
     </div>
   ) : (
-    <main className="adminpage">
+    <main className="adminpage fixedWidth">
       {alert && <AlertDisplay warning={warning} />}
       <h1 style={{ textAlign: "center", marginBottom: "30px" }}>
         Espace administrateur

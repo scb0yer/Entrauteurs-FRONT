@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
-import Story from "../components/Story";
 import("../src/assets/storiespage.css");
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";

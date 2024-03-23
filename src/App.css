@@ -19,6 +19,9 @@ main {
   margin: auto;
   margin-top: 200px;
 }
+.fixedWidth {
+  overflow-x: hidden;
+}
 
 h1 {
   font-family: "Lusitana", serif;
