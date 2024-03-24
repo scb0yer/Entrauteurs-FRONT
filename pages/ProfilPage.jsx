@@ -1209,6 +1209,29 @@ export default function ProfilPage({
                                 Inscrire au concours
                               </button>
                             )}
+                          {!data.writer.concours_id && (
+                            <button
+                              onClick={() => {
+                                if (data.writer.discord_checked) {
+                                  registerToSession(
+                                    book.book_written.story_details.story_title,
+                                    book.book_written.story_details.story_url,
+                                    book.book_written.story_details.story_cover
+                                  );
+                                } else {
+                                  setWarning(
+                                    "Ton compte discord doit être vérifié par un admin pour inscrire ton histoire. Contacte-les sur Discord pour qu'ils valident ton compte."
+                                  );
+                                  setAlert(true);
+                                  setTimeout(() => {
+                                    setAlert(false);
+                                  }, 3500);
+                                }
+                              }}
+                            >
+                              Inscrire au concours
+                            </button>
+                          )}
                           {!exchange &&
                             book.book_written.isRegistered === "No" && (
                               <button
