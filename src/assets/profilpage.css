@@ -244,6 +244,7 @@
 
 .profil .bloc1 .column2 .books-registered {
   display: flex;
+  overflow-x: scroll;
 }
 
 .profil .bloc1 .column2 .bookmark {

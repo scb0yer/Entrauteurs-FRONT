@@ -247,6 +247,7 @@
   justify-content: flex-start;
   margin-bottom: 20px;
   border-bottom: white 1px dashed;
+  overflow-x: scroll;
 }
 .adminpage .bloc2 .categoryContainer > h4 {
   width: 120px;

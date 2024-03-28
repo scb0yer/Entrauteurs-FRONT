@@ -1260,10 +1260,10 @@ export default function ProfilPage({
                         {book.book_written.isRegistered === "Yes" && (
                           <div>
                             <h4>
-                              Ton histoire est inscrite au concours dans la même
-                              catégorie que celles ci-dessous. N'oublie pas de
-                              marquer comme lues celles que tu as déjà lues pour
-                              ne pas tomber dessus lors du tirage !
+                              Ton histoire est inscrite à l'échange d'avis dans
+                              la même catégorie que celles ci-dessous. N'oublie
+                              pas de marquer comme lues celles que tu as déjà
+                              lues pour ne pas tomber dessus lors du tirage !
                             </h4>
                             <div className="books-registered">
                               {booksRegistered.map((story, ref) => {
