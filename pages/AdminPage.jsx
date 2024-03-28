@@ -840,12 +840,16 @@ export default function AdminPage({ token, isAdmin }) {
                     <div>Catégorie : {book.book.story_details.story_cat}</div>
                     <div>
                       Lecteur :{" "}
-                      <Link className="writer2">
+                      <Link
+                        className="writer2"
+                        style={{ fontSize: "15px" }}
+                        to={`/writer/${book.reviewer._id}`}
+                      >
                         {book.reviewer.writer_details.username.slice(0, 15)}{" "}
                         {book.reviewer.writer_details.username.slice(16) &&
                           "..."}
                         {book.reviewer.writer_details.discord &&
-                          ` - (${book.reviewer.writer_details.discord.slice(
+                          `(${book.reviewer.writer_details.discord.slice(
                             0,
                             15
                           )}${
@@ -856,14 +860,15 @@ export default function AdminPage({ token, isAdmin }) {
                     </div>
                     <div>
                       Auteur :{" "}
-                      <Link className="writer2">
+                      <Link
+                        className="writer2"
+                        style={{ fontSize: "15px" }}
+                        to={`/writer/${book.writer._id}`}
+                      >
                         {book.writer.writer_details.username.slice(0, 15)}{" "}
                         {book.writer.writer_details.username.slice(16) && "..."}
                         {book.writer.writer_details.discord &&
-                          ` - (${book.writer.writer_details.discord.slice(
-                            0,
-                            15
-                          )}${
+                          `(${book.writer.writer_details.discord.slice(0, 15)}${
                             book.writer.writer_details.discord.slice(16) &&
                             "..."
                           })`}
@@ -884,11 +889,12 @@ export default function AdminPage({ token, isAdmin }) {
                     </div>
                   </div>
                   <BookImg
+                    className="bookImg"
                     story_cover={book.book.story_details.story_cover}
                     story_title={book.book.story_details.story_title}
                     story_url={book.book.story_details.story_url}
                     story_id={book.book._id}
-                    size={120}
+                    size={130}
                   />
                 </div>
               );

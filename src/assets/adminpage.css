@@ -160,11 +160,19 @@
 }
 
 .adminpage .bloc2 .exchange-datas {
-  width: 400px;
+  width: 350px;
   display: flex;
   justify-content: space-between;
   padding: 10px;
   border: 1px dashed white;
+}
+
+.adminpage .bloc2 .exchange-datas > div {
+  width: 80%;
+}
+
+.adminpage .bloc2 .exchange-datas .bookImg {
+  width: 70px;
 }
 
 .adminpage .bloc2 .exchange-datas > div:first-child {

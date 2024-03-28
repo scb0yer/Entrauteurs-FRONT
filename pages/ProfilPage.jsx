@@ -213,6 +213,7 @@ export default function ProfilPage({
           setTargetProgress(response1.data.writer.target_progress);
           setPublicProgress(response1.data.writer.public_progress);
           setIsInExchange(response1.data.writer.isInExchange);
+          console.log("STORIES_ASSIGNED", response1.data.stories_assigned);
           setIsLoading(false);
           const books = await axios.get(
             "https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/books?isRegistered=Yes"
@@ -787,11 +788,6 @@ export default function ProfilPage({
                             data.writer.stories_assigned.length - 1
                           ].book_assigned.story_details.story_url
                         }
-                        story_id={
-                          data.stories_assigned[
-                            data.stories_assigned.length - 1
-                          ].book_assigned._id
-                        }
                         size={200}
                       />
                       <div>
@@ -828,16 +824,17 @@ export default function ProfilPage({
                             201
                           ) && "..."}
                         </div>
-                        <button
-                          style={{ width: "150px" }}
-                          onClick={() => {
-                            setDisplayReview(true);
-                          }}
-                        >
-                          Remplir la fiche avis
-                        </button>
+                        <br />
                       </div>
                     </div>
+                    <button
+                      style={{ width: "150px" }}
+                      onClick={() => {
+                        setDisplayReview(true);
+                      }}
+                    >
+                      Remplir la fiche avis
+                    </button>
                   </div>
                 )}
                 {pendingReviews.length > 0 && (
