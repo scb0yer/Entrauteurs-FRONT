@@ -25,6 +25,7 @@ export default function WriterPage({
   const [data, setData] = useState([]);
   const [readList, setReadList] = useState();
   const [isloading, setIsLoading] = useState(true);
+  const rating = [0, 1, 2, 3, 4];
 
   const { id } = useParams();
 

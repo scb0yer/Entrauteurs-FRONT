@@ -441,7 +441,7 @@ export default function ProfilPage({
     }
   };
 
-  const validateReview = async (storyId) => {
+  const validateReview = async (review_id) => {
     try {
       setIsLoading(true);
       if (alreadyValidate) {
@@ -455,7 +455,7 @@ export default function ProfilPage({
         setIsLoading(true);
         const { data } = await axios.post(
           `https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/writer/review/validate`,
-          { share: publicReview },
+          { share: publicReview, review_id },
           {
             headers: {
               authorization: `Bearer ${token}`,
@@ -935,7 +935,7 @@ export default function ProfilPage({
                             {publicReview ? "oui" : "non"}
                             <button
                               onClick={() => {
-                                validateReview(review.book);
+                                validateReview(review._id);
                               }}
                             >
                               Valider
