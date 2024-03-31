@@ -32,9 +32,9 @@
   overflow-y: scroll;
 }
 
-form::-webkit-scrollbar {
+/* form::-webkit-scrollbar {
   display: none;
-}
+} */
 
 .review form div > div:last-child {
   display: flex;

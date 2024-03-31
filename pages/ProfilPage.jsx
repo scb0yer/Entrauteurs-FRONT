@@ -172,32 +172,11 @@ export default function ProfilPage({
           } else {
             setAdult(false);
           }
-          const storiesWritten = await axios.get(
-            `https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/books?writer_id=${response1.data.writer._id}`,
-            {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            }
-          );
 
           const newPendingReviews = [];
-          for (let s = 0; s < storiesWritten.data.count; s++) {
-            if (storiesWritten.data.results[s].story_reviews) {
-              for (
-                let r = 0;
-                r < storiesWritten.data.results[s].story_reviews.length;
-                r++
-              ) {
-                if (
-                  storiesWritten.data.results[s].story_reviews[r].story_review
-                    .status === "sent"
-                ) {
-                  newPendingReviews.push(
-                    storiesWritten.data.results[s].story_reviews[r].story_review
-                  );
-                }
-              }
+          for (let s = 0; s < response1.data.reviews.length; s++) {
+            if (response1.data.reviews[s].status === "sent") {
+              newPendingReviews.push(response1.data.reviews[s]);
             }
           }
           setPendingReviews(newPendingReviews);
@@ -736,6 +715,7 @@ export default function ProfilPage({
                     les enregistrer avant de quitter la page !
                   </p>
                 )}
+
                 <div
                   style={{
                     display: "flex",
