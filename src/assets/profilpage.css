@@ -242,19 +242,6 @@
   hyphens: auto;
 }
 
-.profil .bloc1 .column2 .reviews {
-  overflow-y: scroll;
-}
-
-.profil .bloc1 .column2 .reviews > div > div:last-child {
-  display: flex;
-  justify-content: space-evenly;
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
-.profil .bloc1 .column2 .reviews button {
-  width: 100px;
-}
 
 .profil .bloc1 .column2 .books-registered {
   display: flex;
