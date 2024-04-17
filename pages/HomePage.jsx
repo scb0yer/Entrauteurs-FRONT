@@ -46,7 +46,7 @@ export default function HomePage({
         );
         setAuthors(response3.data);
         const response4 = await axios.get(
-          `https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/books?sort=note&limit=5&page=${pageLastAddedStories}`
+          `https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/books?sort=last_added&limit=5&page=${pageLastAddedStories}`
         );
         setLastAddedStories(response4.data);
         setIsLoading(false);
