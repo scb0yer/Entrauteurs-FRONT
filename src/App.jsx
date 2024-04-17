@@ -55,6 +55,7 @@ import MentionsLegalesPage from "../pages/MentionsLegales";
 import AdminPage from "../pages/AdminPage";
 import Contestation from "../components/Contestation";
 import StickersSelection from "../components/StickersSelection";
+import DiscordPage from "../pages/DiscordPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -134,6 +135,7 @@ function App() {
           }
         />
         <Route path="/concours" element={<ConcoursPage />} />
+        <Route path="/discord" element={<DiscordPage />} />
         <Route
           path="/admin"
           element={<AdminPage token={token} isAdmin={isAdmin} />}

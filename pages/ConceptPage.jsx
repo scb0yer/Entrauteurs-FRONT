@@ -23,6 +23,18 @@ export default function ConceptPage() {
         <div>
           Nous rejoindre sur le serveur Discord.
           <br />
+          <p style={{ fontSize: "16px", lineHeight: "18px" }}>
+            <br />
+            <a
+              href="https://www.canva.com/design/DAGCqCPIqqc/iGEmh3nvZ-7L1YehtA2oYQ/view?utm_content=DAGCqCPIqqc&utm_campaign=designshare&utm_medium=link&utm_source=editor"
+              target="_blank"
+              alt="tuto discord"
+            >
+              Tu ne connais pas Discord ? Clique ici pour découvrir comment ça
+              fonctionne.
+            </a>
+          </p>
+          <br />
           Avoir un compte sur Wattpad.
         </div>
       </div>
