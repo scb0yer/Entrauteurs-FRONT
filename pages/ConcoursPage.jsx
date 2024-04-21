@@ -109,8 +109,8 @@ export default function ConcoursPage() {
       <h2>Liste des participants inscrits pour la prochaine session.</h2>
       <br />
       <p>
-        La session aura lieu du 5 mai au 23 juin. Les inscriptions sont
-        ouvertes.
+        La session aura lieu du 5 mai au 23 juin. Le nombre de participants
+        maximal est atteint, les inscriptions sont fermées.
       </p>
       <br />
       <div className="authorsContainer">
