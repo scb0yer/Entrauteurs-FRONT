@@ -7,6 +7,7 @@ export default function ConcoursPage() {
   const [authorsRegistered, setAuthorsRegistered] = useState();
   const [authorsActive, setAuthorsActive] = useState();
   const [isloading, setIsLoading] = useState(true);
+  const [sessions, setSessions] = useState(null);
 
   useEffect(() => {
     const getAuthors = async () => {
@@ -18,6 +19,11 @@ export default function ConcoursPage() {
         const active = await axios.get(
           "https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/authors/Active"
         );
+        const getSessions = await axios.get(
+          "https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/sessions"
+        );
+        setSessions(getSessions.data);
+        console.log("sessions>>>", getSessions.data);
         setAuthorsActive(active.data);
         setIsLoading(false);
       } catch (error) {
@@ -126,10 +132,9 @@ export default function ConcoursPage() {
           );
         })}
       </div>
-      <br />
       <h2>Liste des participants inscrits pour la session en cours.</h2>
       <br />
-      <p>Du 3 mars au 21 avril 2024.</p>
+      <p>Aucune session en cours, prochaine session : 5 mai 2024 </p>
       <br />
       <div className="authorsContainer">
         {authorsActive.authors.map((author, index) => {
@@ -150,6 +155,36 @@ export default function ConcoursPage() {
           );
         })}
       </div>
+      <br />
+      <h1>Résultats des concours passés</h1>
+      <br />
+      {!isloading &&
+        sessions &&
+        sessions.map((session, index) => {
+          const sortedResults = session.results.sort((a, b) => a.rank - b.rank);
+          return (
+            <div key={index}>
+              <h2>{session.name}</h2>
+              <div>Nombre de participants : {session.results.length}</div>
+              <h3>Classement :</h3>
+              <div className="results">
+                {sortedResults.map((result, ind) => {
+                  return (
+                    <div key={ind}>
+                      <div>#{result.rank}</div>
+                      <BookImg
+                        story_cover={result.story_cover}
+                        story_title={result.story_title}
+                        story_url={result.story_url}
+                        size={200}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
     </main>
   );
 }

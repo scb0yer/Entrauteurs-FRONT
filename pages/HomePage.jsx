@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logowattpad from "../src/assets/wattpad_min.png";
 import logodiscord from "../src/assets/discord_min.png";
 import Loading from "../components/Loading";
+import BookImg from "../components/BookImg";
 
 export default function HomePage({
   token,
@@ -33,10 +34,10 @@ export default function HomePage({
           const readBooks = JSON.parse(storiesRead);
           setReadList(readBooks);
         }
-        // const response1 = await axios.get(
-        //   `https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/books?sort=note&concours=yes&limit=3&page=${pageConcours}`
-        // );
-        // setConcours(response1.data);
+        const getSessions = await axios.get(
+          "https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/sessions"
+        );
+        setConcours(getSessions.data);
         const response2 = await axios.get(
           `https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/books?sort=note&limit=3&page=${pageBestStories}`
         );
@@ -101,8 +102,59 @@ export default function HomePage({
                   {/* -------------Container Résultats du concours------------- */}
                   <div>
                     <h3>Résultats du dernier concours</h3>
-                    <div className="storyContainer-3">
-                      En attente des résultats de la première session...
+                    <div className="containerWithAngles">
+                      <div>
+                        {pageConcours > 1 && (
+                          <FontAwesomeIcon
+                            icon="angle-left"
+                            size="2xl"
+                            onClick={() => {
+                              setPageConcours(pageConcours - 1);
+                            }}
+                          />
+                        )}
+                      </div>
+                      <div className="storyContainer-3">
+                        {concours.map((session, index) => {
+                          const sortedResults = session.results.sort(
+                            (a, b) => a.rank - b.rank
+                          );
+                          if (session === concours[concours.length - 1]) {
+                            return (
+                              <div key={index} className="storyContainer-3">
+                                {sortedResults.map((result, ind) => {
+                                  return (
+                                    ind >= (pageConcours - 1) * 3 &&
+                                    ind < pageConcours * 3 && (
+                                      <div key={ind}>
+                                        <div>Rang : #{result.rank}</div>
+                                        <BookImg
+                                          story_cover={result.story_cover}
+                                          story_title={result.story_title}
+                                          story_url={result.story_url}
+                                          size={200}
+                                        />
+                                      </div>
+                                    )
+                                  );
+                                })}
+                              </div>
+                            );
+                          }
+                        })}
+                      </div>
+                      <div>
+                        {concours[concours.length - 1].results.length >
+                          pageConcours * 3 && (
+                          <FontAwesomeIcon
+                            icon="angle-right"
+                            size="2xl"
+                            onClick={() => {
+                              setPageConcours(pageConcours + 1);
+                            }}
+                          />
+                        )}
+                      </div>
                     </div>
                   </div>
                   <br />

@@ -1034,6 +1034,7 @@ export default function ProfilPage({
                     </button>
                   </div>
                   {data.writer.stories_written.map((book, index) => {
+                    console.log("BOOOOOK", book);
                     let half = false;
                     if (
                       book.book_written.note -
@@ -1120,7 +1121,22 @@ export default function ProfilPage({
                               </div>
                             )}
 
-                            <div>Classement au concours</div>
+                            <div>
+                              Classements au concours :{" "}
+                              <div>
+                                {book.book_written.concours &&
+                                  book.book_written.concours.map(
+                                    (session, index) => {
+                                      return (
+                                        <div key={index}>
+                                          {session.session_name} : #
+                                          {session.rank}
+                                        </div>
+                                      );
+                                    }
+                                  )}
+                              </div>
+                            </div>
                             <div>
                               {book.book_written.story_details.story_description.slice(
                                 0,

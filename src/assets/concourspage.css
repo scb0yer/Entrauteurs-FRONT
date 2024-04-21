@@ -36,3 +36,16 @@
   border: 1px white solid;
   border-radius: 15px;
 }
+
+.concoursPage .results {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.concoursPage .results > div {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
