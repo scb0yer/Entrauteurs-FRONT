@@ -4,11 +4,11 @@ import("../src/assets/reviewmodal.css");
 import AlertDisplay from "../components/Alert";
 
 export default function Review({ token, setDisplayReview, setIsInExchange }) {
-  const [note1, setNote1] = useState(0);
-  const [note2, setNote2] = useState(0);
-  const [note3, setNote3] = useState(0);
-  const [note4, setNote4] = useState(0);
-  const [note5, setNote5] = useState(0);
+  const [note1, setNote1] = useState(null);
+  const [note2, setNote2] = useState(null);
+  const [note3, setNote3] = useState(null);
+  const [note4, setNote4] = useState(null);
+  const [note5, setNote5] = useState(null);
   const [change, setChange] = useState(0);
   const [average, setAverage] = useState(0);
   const [comment1, setComment1] = useState();
@@ -28,11 +28,11 @@ export default function Review({ token, setDisplayReview, setIsInExchange }) {
   const postReview = async () => {
     try {
       if (
-        note1 &&
-        note2 &&
-        note3 &&
-        note4 &&
-        note5 &&
+        note1 !== null &&
+        note2 !== null &&
+        note3 !== null &&
+        note4 !== null &&
+        note5 !== null &&
         comment1 &&
         comment2 &&
         comment3 &&
