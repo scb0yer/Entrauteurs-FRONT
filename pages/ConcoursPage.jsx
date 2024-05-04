@@ -120,7 +120,10 @@ export default function ConcoursPage() {
               <div>
                 <strong className="username">{author.username}</strong>
               </div>
-              <div>{author.story_title}</div>
+              <div>
+                {author.story_title.slice(0, 40)}
+                {author.story_title.length > 40 && "..."}
+              </div>
               <BookImg
                 story_cover={author.story_cover}
                 story_title={author.story_title}
@@ -143,7 +146,10 @@ export default function ConcoursPage() {
               <div>
                 <strong className="username">{author.username}</strong>
               </div>
-              <div>{author.story_title}</div>
+              <div>
+                {author.story_title.slice(0, 40)}
+                {author.story_title.length > 40 && "..."}
+              </div>
               <BookImg
                 story_cover={author.story_cover}
                 story_title={author.story_title}
