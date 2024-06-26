@@ -309,9 +309,9 @@ export default function ProfilPage({
 
   const registerToSession = async (story_title, story_url, story_cover) => {
     try {
-      console.log("enter");
+      console.log("data", data);
       setIsLoading(true);
-      if (!data.concours_id && !session) {
+      if (!data.writer.concours_id && !session) {
         console.log("nouvel auteur");
         const { data } = await axios.post(
           "https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/author/signup",
@@ -358,7 +358,7 @@ export default function ProfilPage({
       }
     } catch (error) {
       console.log("problème");
-      console.log(error.message);
+      console.log(error);
       setWarning("Tu ne peux inscrire qu'une seule histoire par concours.");
       setAlert(true);
       setTimeout(() => {
