@@ -223,7 +223,10 @@ export default function HomePage({
                                       }
                                     })}
                                   </div>
-                                  <span className="note">{story.note}/5</span>
+                                  <span className="note">
+                                    {Number.parseFloat(story.note).toFixed(1)}/5
+                                    ({story.nbReviews})
+                                  </span>
                                 </div>
                               )}
                             </div>

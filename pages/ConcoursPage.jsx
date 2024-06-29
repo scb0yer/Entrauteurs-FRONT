@@ -22,7 +22,7 @@ export default function ConcoursPage() {
         const getSessions = await axios.get(
           "https://site--entrauteurs-backend--dzk9mdcz57cb.code.run/sessions"
         );
-        setSessions(getSessions.data);
+        setSessions(getSessions.data.reverse());
         console.log("sessions>>>", getSessions.data);
         setAuthorsActive(active.data);
         setIsLoading(false);
@@ -109,7 +109,7 @@ export default function ConcoursPage() {
       <h2>Liste des participants inscrits pour la prochaine session.</h2>
       <br />
       <p>
-        La session aura lieu du 5 mai au 23 juin. Le nombre de participants
+        La session aura lieu du 7 juillet au 25 août. Le nombre de participants
         maximal est atteint, les inscriptions sont fermées.
       </p>
       <br />
@@ -137,7 +137,7 @@ export default function ConcoursPage() {
       </div>
       <h2>Liste des participants inscrits pour la session en cours.</h2>
       <br />
-      <p>Aucune session en cours, prochaine session : 5 mai 2024 </p>
+      <p>Aucune session en cours, prochaine session : 7 juillet 2024 </p>
       <br />
       <div className="authorsContainer">
         {authorsActive.authors.map((author, index) => {
