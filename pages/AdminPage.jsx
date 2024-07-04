@@ -378,141 +378,115 @@ export default function AdminPage({ token, isAdmin }) {
       <h1 style={{ textAlign: "center", marginBottom: "30px" }}>
         Espace administrateur
       </h1>
-      <div className="bloc1">
-        <div className="left-col">
-          <div>
-            <h3>Concours</h3>
-            {week && (
-              <h4>
-                {data[7].concours.name} -- Semaine {week}
-              </h4>
-            )}
-            {week ? (
-              <button
-                onClick={() => {
-                  newWeek();
-                }}
-              >
-                Démarrer une nouvelle semaine
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  newSessionConcours();
-                }}
-              >
-                Lancer une nouvelle session
-              </button>
-            )}
+      <div></div>
+
+      {/* Début espace administrateur */}
+      <div className="send-stickers">
+        <img
+          src={
+            "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156853/entrauteurs/messages/hello_dxk6rc.gif"
+          }
+          alt="sticker"
+        />
+        <button
+          onClick={() => {
+            setDisplayStickers(!displayStickers);
+          }}
+        >
+          Envoyer un sticker à tous les auteurs
+        </button>
+        <br />
+        {displayStickers && (
+          <div className="stickers">
+            {messagesList.map((message, index) => {
+              return (
+                <img
+                  key={index}
+                  src={message}
+                  alt="sticker"
+                  onClick={() => {
+                    sendSticker({ message: message });
+                  }}
+                />
+              );
+            })}
           </div>
-          <div>
-            <h3>Échanges</h3>
-            {data[6] && data[6].echange && data[6].echange.length > 0 ? (
-              <button
-                onClick={() => {
-                  completeExchange();
-                }}
-              >
-                Terminer la session d'échange
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  newExchange();
-                }}
-              >
-                Commencer la session d'échange
-              </button>
-            )}
-          </div>
-          <div className="send-stickers">
-            <img
-              src={
-                "https://res.cloudinary.com/dlltxf0rr/image/upload/v1709156853/entrauteurs/messages/hello_dxk6rc.gif"
-              }
-              alt="sticker"
-            />
-            <button
-              onClick={() => {
-                setDisplayStickers(!displayStickers);
-              }}
-            >
-              Envoyer un sticker à tous les auteurs
-            </button>
-            <br />
-            {displayStickers && (
-              <div className="stickers">
-                {messagesList.map((message, index) => {
-                  return (
-                    <img
-                      key={index}
-                      src={message}
-                      alt="sticker"
-                      onClick={() => {
-                        sendSticker({ message: message });
-                      }}
-                    />
-                  );
-                })}
-              </div>
+        )}
+      </div>
+      <section className="section">
+        <h2>Section gérée par Laura</h2>
+        <h3>👋 Nouveaux inscrits</h3>
+        <div>
+          <p>
+            Vérifier que les pseudo des nouveaux inscrits renvoient bien vers un
+            vrai compte (en cliquant dessus) et valider. Sinon, supprimer.
+          </p>
+          <div className="containers">
+            {data &&
+              data[1] &&
+              data[1].countPendingWriters > 0 &&
+              data[1].pendingWriters.map((writer, index) => {
+                return (
+                  <div key={index} className="writer">
+                    <a href={writer.writer_details.wattpad} target="_blank">
+                      {writer.writer_details.username}
+                    </a>
+                    <div className="check yes">
+                      {" "}
+                      <FontAwesomeIcon
+                        icon="check"
+                        size="xl"
+                        onClick={() => {
+                          updateWriter(writer._id, { status: "Active" });
+                        }}
+                      />
+                    </div>
+                    <div className="check no">
+                      <FontAwesomeIcon
+                        className="icon to-dissmiss"
+                        icon="xmark"
+                        size="xl"
+                        onClick={() => {
+                          setWarning("Fonctionnalité en cours de création");
+                          setAlert(true);
+                          setTimeout(() => {
+                            setAlert(false);
+                            setDisplayStickers(false);
+                          }, 3000);
+                        }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            {data && data[1] && data[1].countPendingWriters === 0 && (
+              <div>Aucun nouvel auteur enregistré</div>
             )}
           </div>
         </div>
-        <div className="right-col">
-          {/* ------------ Nouveaux auteurs à valider ------------ */}
-          <div style={{ position: "relative" }}>
-            <h3>Auteurs à valider</h3>
-            <p className="explication">
-              Vérifier que l'adresse wattpad renvoie bien au compte de l'auteur.
-            </p>
-            <div className="containers">
-              {data &&
-                data[1] &&
-                data[1].countPendingWriters > 0 &&
-                data[1].pendingWriters.map((writer, index) => {
-                  return (
+
+        <h3>👥 Comptes Discord</h3>
+        <div>
+          <p>
+            Vérifier que le pseudo affiché est bien présent sur le discord. Si
+            oui, valider et attribuer le rang "scribe confirmé" sur le serveur.
+            Si non, contacter par email. Si pas de réponse au bout de deux
+            semaines, supprimer.
+          </p>
+          <div className="containers">
+            {data &&
+              data[0] &&
+              data[0].countDiscordUnchecked > 0 &&
+              data[0].discordUnchecked.map((writer, index) => {
+                console.log(writer);
+                return (
+                  writer.writer_details.discord && (
                     <div key={index} className="writer">
-                      <a href={writer.writer_details.wattpad} target="_blank">
-                        {writer.writer_details.username}
-                      </a>
                       <div>
-                        {" "}
-                        <FontAwesomeIcon
-                          icon="check"
-                          size="xl"
-                          onClick={() => {
-                            updateWriter(writer._id, { status: "Active" });
-                          }}
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
-              {data && data[1] && data[1].countPendingWriters === 0 && (
-                <div>Aucun nouvel auteur enregistré</div>
-              )}
-            </div>
-          </div>
-          {/* ------------ Discord non vérifiés ------------ */}
-          <div style={{ position: "relative" }}>
-            <h3>Discord à vérifier</h3>
-            <p className="explication">
-              Vérifier que l'adresse wattpad renvoie bien au compte de l'auteur.
-            </p>
-            <div className="containers">
-              {data &&
-                data[0] &&
-                data[0].countDiscordUnchecked > 0 &&
-                data[0].discordUnchecked.map((writer, index) => {
-                  console.log(writer);
-                  return (
-                    writer.writer_details.discord && (
-                      <div key={index} className="writer">
                         <a href={writer.writer_details.wattpad} target="_blank">
                           {writer.writer_details.discord}
                         </a>
-
-                        <div>
+                        <div className="check yes">
                           {" "}
                           <FontAwesomeIcon
                             icon="check"
@@ -524,40 +498,59 @@ export default function AdminPage({ token, isAdmin }) {
                             }}
                           />
                         </div>
+                        <div className="check no">
+                          <FontAwesomeIcon
+                            className="icon to-dissmiss"
+                            icon="xmark"
+                            size="xl"
+                            onClick={() => {
+                              setWarning("Fonctionnalité en cours de création");
+                              setAlert(true);
+                              setTimeout(() => {
+                                setAlert(false);
+                                setDisplayStickers(false);
+                              }, 3000);
+                            }}
+                          />
+                        </div>
                       </div>
-                    )
-                  );
-                })}
-              {data && data[0] && data[0].countDiscordUnchecked === 0 && (
-                <div>Aucun nouvel compte discord à vérifier</div>
-              )}
-            </div>
+                      {writer.connexion_details.email}
+                    </div>
+                  )
+                );
+              })}
+            {data && data[0] && data[0].countDiscordUnchecked === 0 && (
+              <div>Aucun nouvel compte discord à vérifier</div>
+            )}
           </div>
-          <div style={{ position: "relative" }}>
-            <h3>Histoires à valider</h3>
-            <p className="explication">
-              Vérifier que l'adresse wattpad renvoie bien à une histoire qui a
-              été écrite par cet auteur.
-            </p>
-            <div className="containers">
-              {data &&
-                data[2] &&
-                data[2].count > 0 &&
-                data[2].books.map((book, index) => {
-                  return (
-                    <div key={index} className="book">
-                      <div>
-                        {book.writer.writer_details.username.slice(0, 12)}
-                        {book.writer.writer_details.username.slice(12) && "..."}
-                      </div>
-                      <BookImg
-                        story_cover={book.story_details.story_cover}
-                        story_title={book.story_details.story_title}
-                        story_url={book.story_details.story_url}
-                        story_id={book.story_details.story_id}
-                        size={150}
-                      />
-                      <div>
+        </div>
+
+        <h3>📚 Nouvelles histoires</h3>
+        <div>
+          <p>
+            Vérifier que l'image renvoie bien vers une histoire Wattpad écrite
+            par cet auteur. Sinon, supprimer.
+          </p>
+          <div className="containers">
+            {data &&
+              data[2] &&
+              data[2].count > 0 &&
+              data[2].books.map((book, index) => {
+                return (
+                  <div key={index} className="book">
+                    <div>
+                      {book.writer.writer_details.username.slice(0, 12)}
+                      {book.writer.writer_details.username.slice(12) && "..."}
+                    </div>
+                    <BookImg
+                      story_cover={book.story_details.story_cover}
+                      story_title={book.story_details.story_title}
+                      story_url={book.story_details.story_url}
+                      story_id={book.story_details.story_id}
+                      size={150}
+                    />
+                    <div>
+                      <div className="check yes">
                         <FontAwesomeIcon
                           icon="check"
                           size="xl"
@@ -568,18 +561,211 @@ export default function AdminPage({ token, isAdmin }) {
                           }}
                         />
                       </div>
+                      <div className="check no">
+                        <FontAwesomeIcon
+                          className="icon to-dissmiss"
+                          icon="xmark"
+                          size="xl"
+                          onClick={() => {
+                            updateBook(book._id, {
+                              noDiscord: true,
+                            });
+                          }}
+                        />
+                      </div>
                     </div>
+                  </div>
+                );
+              })}
+            {data && data[2] && data[2].count === 0 && (
+              <div>Aucune nouvelle histoire à valider</div>
+            )}
+          </div>
+        </div>
+      </section>
+      <br />
+      <br />
+
+      <section>
+        <h2>Section gérée par Poppy</h2>
+        <h3>
+          🧮 Nombre d'inscrits à la prochaine session : [{" "}
+          {authors && authors.nbRegistered} ] /15
+        </h3>
+        <h3>📋 Inscriptions en attente pour la prochaine session</h3>
+        <div className="containers">
+          {authors &&
+            authors.authors.map((author, index) => {
+              return (
+                author.status === "Pending" && (
+                  <div key={index} className="book2">
+                    <div className="writer2">{author.account.username}</div>
+                    <BookImg
+                      story_cover={author.story_details.story_cover}
+                      story_title={author.story_details.story_title}
+                      story_url={author.story_details.story_url}
+                      size={150}
+                    />
+                    <div className="icons">
+                      <FontAwesomeIcon
+                        className="icon to-validate"
+                        icon="check"
+                        size="xl"
+                        onClick={() => {
+                          changeStatus(author._id, "Registered");
+                        }}
+                      />
+                      <FontAwesomeIcon
+                        className="icon to-dissmiss"
+                        icon="xmark"
+                        size="xl"
+                        onClick={() => {
+                          changeStatus(author._id, "Inactive");
+                        }}
+                      />
+                    </div>
+                  </div>
+                )
+              );
+            })}
+          {authors && authors.nbPending === 0 && (
+            <p>Aucune inscription en attente</p>
+          )}
+        </div>
+        <h3>🏆 Gestion de la session en cours</h3>
+        <div className="concours">
+          {week ? (
+            <h4>
+              {data[7].concours.name} -- Semaine {week}
+            </h4>
+          ) : (
+            <h4>Aucune session en cours</h4>
+          )}
+          {week ? (
+            week < 7 ? (
+              <button
+                onClick={() => {
+                  newWeek();
+                }}
+              >
+                Démarrer une nouvelle semaine
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  newWeek();
+                }}
+              >
+                Terminer le concours
+              </button>
+            )
+          ) : (
+            <button
+              onClick={() => {
+                newSessionConcours();
+              }}
+            >
+              Lancer une nouvelle session
+            </button>
+          )}
+        </div>
+        <div className="concours">
+          <div>
+            <h4>Participants qui n'ont pas encore voté</h4>
+            <ul>
+              {authors &&
+                authors.authors.map((author, index) => {
+                  return (
+                    author.status === "Active" &&
+                    author.stories_voted.length < week && (
+                      <li key={index}>
+                        {author.writerData.writer_details.discord}
+                      </li>
+                    )
                   );
                 })}
-              {data && data[2] && data[2].count === 0 && (
-                <div>Aucune nouvelle histoire à valider</div>
-              )}
+            </ul>
+          </div>
+          <div>
+            <h4>Comptes Instagram des participants</h4>
+            <div>
+              <ul>
+                {authors &&
+                  (week
+                    ? authors.authors.map((author, index) => {
+                        let instagram = "";
+                        if (
+                          author.status === "Active" &&
+                          author.writerData.writer_details.instagram
+                        ) {
+                          instagram =
+                            author.writerData.writer_details.instagram;
+                          instagram = instagram.slice(26).split("/");
+                          instagram = instagram[0].split("?");
+                          instagram = "@" + instagram[0];
+                        }
+                        return (
+                          author.status === "Active" &&
+                          author.writerData.writer_details.instagram && (
+                            <li key={index}>
+                              {author.story_title} → {instagram}
+                            </li>
+                          )
+                        );
+                      })
+                    : authors.authors.map((author, index) => {
+                        let instagram = "";
+                        if (
+                          author.status === "Registered" &&
+                          author.writerData.writer_details.instagram
+                        ) {
+                          instagram =
+                            author.writerData.writer_details.instagram;
+                          instagram = instagram.slice(26).split("/");
+                          instagram = instagram[0].split("?");
+                          instagram = "@" + instagram[0];
+                        }
+                        return (
+                          author.status === "Registered" &&
+                          author.writerData.writer_details.instagram && (
+                            <li key={index}>
+                              {author.story_title} → {instagram}
+                            </li>
+                          )
+                        );
+                      }))}
+              </ul>
             </div>
           </div>
         </div>
-      </div>
-      <div className="bloc2">
-        <h3>Contestations à gérer :</h3>
+        {!week && (
+          <div>
+            <h3>📕📗📘 Livres inscrits au prochain concours 📙📗📘</h3> (Faire
+            des captures d'écran pour Instagram)
+            <div className="booklist">
+              {authors &&
+                authors.authors.map((author, index) => {
+                  return (
+                    author.status === "Registered" && (
+                      <BookImg
+                        key={index}
+                        story_cover={author.story_cover}
+                        story_title={author.story_title}
+                        story_url={author.story_url}
+                        size={150}
+                      />
+                    )
+                  );
+                })}
+            </div>
+          </div>
+        )}
+      </section>
+      <br />
+      <br />
+      <section>
+        <h2>Section gérée par SCBoyer</h2>
+        <h3>🪓 Contestations à gérer</h3>
         <div>
           {data &&
             data[3] &&
@@ -604,304 +790,162 @@ export default function AdminPage({ token, isAdmin }) {
             <div>Aucune contestation à gérer</div>
           )}
         </div>
-      </div>
-      <div className="bloc2">
-        <h3>Inscriptions en attente pour le concours :</h3>
-        <div className="bookContainer">
-          {authors &&
-            authors.authors.map((author, index) => {
-              return (
-                author.status === "Pending" && (
-                  <div key={index} className="book2">
-                    <div className="writer2">{author.account.username}</div>
-                    <BookImg
-                      story_cover={author.story_details.story_cover}
-                      story_title={author.story_details.story_title}
-                      story_url={author.story_details.story_url}
-                      size={150}
-                    />
-                    <div className="icons">
-                      <FontAwesomeIcon
-                        className="icon to-validate"
-                        icon="check"
-                        size="xl"
-                        onClick={() => {
-                          changeStatus(author._id, "Registered");
-                        }}
-                      />
-                      <FontAwesomeIcon
-                        className="icon to-inactive"
-                        icon="pause"
-                        size="xl"
-                        onClick={() => {
-                          changeStatus(author._id, "Inactive");
-                        }}
-                      />
-                      <FontAwesomeIcon
-                        className="icon to-dissmiss"
-                        icon="xmark"
-                        size="xl"
-                        onClick={() => {
-                          changeStatus(author._id, "Dissmissed");
-                        }}
-                      />
+        <h3>🎰 Gestion du tirage en cours</h3>
+        <div>
+          <h4>Participants qui n'ont pas encore envoyé leur avis :</h4>
+          <div className="noReviewsList">
+            {data &&
+              data[6] &&
+              data[6].echange &&
+              data[6].echange[0] &&
+              data[6].echange[0].draw.map((book, index) => {
+                return (
+                  !book.review && (
+                    <div key={index} className="noReview">
+                      <div style={{ color: "red" }}>
+                        lecteur : @{book.reviewer.writer_details.discord}
+                      </div>
+                      <div>titre : {book.book.story_details.story_title}</div>
+                      <div>auteur : @{book.writer.writer_details.discord}</div>
                     </div>
-                  </div>
-                )
-              );
-            })}
+                  )
+                );
+              })}
+          </div>
         </div>
-      </div>
-      <div className="bloc2">
+        <div className="btn-exchange">
+          {data[6] && data[6].echange && data[6].echange.length > 0 ? (
+            <button
+              onClick={() => {
+                completeExchange();
+              }}
+            >
+              Terminer la session d'échange
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                newExchange();
+              }}
+            >
+              Commencer la session d'échange
+            </button>
+          )}
+        </div>
         <h3>
-          Inscriptions validées pour le concours : {nbAuthors} participants
-          validés
+          📋 Inscrits pour le prochain tirage : [{" "}
+          {data && data[8] && data[8].count > 0 ? data[8].count : "0 "} ]
+          {" participants"}
         </h3>
-        <div className="bookContainer">
-          {authors &&
-            authors.authors.map((author, index) => {
+        {data && data[8] && data[8].count === 0 && (
+          <div>Aucun inscrit pour l'échange d'avis</div>
+        )}
+
+        <div className="categoryContainer">
+          <h4>Romance</h4>
+          {data &&
+            data[8] &&
+            data[8].count > 0 &&
+            data[8].writersRegistered.map((book, index) => {
               return (
-                author.status === "Registered" && (
+                book.story_details.story_cat === "Romance" && (
                   <div
                     key={index}
                     className="book2"
-                    style={{ height: "200px" }}
+                    style={{ height: "240px", textAlign: "center" }}
                   >
-                    <div className="writer2">
-                      {author.account.username.slice(0, 10)}
-                      {author.account.username.slice(10) && "..."}
-                    </div>
+                    <Link className="writer2">
+                      {book.writer.writer_details.discord && (
+                        <div>
+                          {book.writer.writer_details.discord.slice(0, 10)}
+                          {book.writer.writer_details.discord.slice(10) &&
+                            "..."}
+                        </div>
+                      )}
+                    </Link>
                     <BookImg
-                      story_cover={author.story_details.story_cover}
-                      story_title={author.story_details.story_title}
-                      story_url={author.story_details.story_url}
-                      size={150}
+                      story_cover={book.story_details.story_cover}
+                      story_title={book.story_details.story_title}
+                      story_url={book.story_details.story_url}
+                      story_id={book._id}
+                      size={140}
                     />
                   </div>
                 )
               );
             })}
         </div>
-      </div>
-      <div className="bloc2">
-        <h3>
-          Inscrits pour le prochain échange d'avis :{" "}
-          {data && data[8] && data[8].count > 0 ? data[8].count : "0 "}
-          {" participants"}
-        </h3>
-        <div className="bookContainer2">
-          <div className="categoryContainer">
-            <h4>Romance</h4>
-            {data &&
-              data[8] &&
-              data[8].count > 0 &&
-              data[8].writersRegistered.map((book, index) => {
-                return (
-                  book.story_details.story_cat === "Romance" && (
-                    <div
-                      key={index}
-                      className="book2"
-                      style={{ height: "240px", textAlign: "center" }}
-                    >
-                      <Link className="writer2">
-                        <div>
-                          {book.writer.writer_details.username.slice(0, 10)}
-                          {book.writer.writer_details.username.slice(10) &&
-                            "..."}
-                        </div>
-                        {book.writer.writer_details.discord && (
-                          <div>
-                            ({book.writer.writer_details.discord.slice(0, 10)}
-                            {book.writer.writer_details.discord.slice(10) &&
-                              "..."}
-                            )
-                          </div>
-                        )}
-                      </Link>
-                      <div>{book.story_details.story_cat}</div>
-                      <BookImg
-                        story_cover={book.story_details.story_cover}
-                        story_title={book.story_details.story_title}
-                        story_url={book.story_details.story_url}
-                        story_id={book._id}
-                        size={140}
-                      />
-                    </div>
-                  )
-                );
-              })}
-          </div>
-          <div className="categoryContainer">
-            <h4>Imaginaire</h4>
-            {data &&
-              data[8] &&
-              data[8].count > 0 &&
-              data[8].writersRegistered.map((book, index) => {
-                return (
-                  book.story_details.story_cat === "Imaginaire" && (
-                    <div
-                      key={index}
-                      className="book2"
-                      style={{ height: "240px", textAlign: "center" }}
-                    >
-                      <Link className="writer2">
-                        <div>
-                          {book.writer.writer_details.username.slice(0, 10)}
-                          {book.writer.writer_details.username.slice(10) &&
-                            "..."}
-                        </div>
-                        {book.writer.writer_details.discord && (
-                          <div>
-                            ({book.writer.writer_details.discord.slice(0, 10)}
-                            {book.writer.writer_details.discord.slice(10) &&
-                              "..."}
-                            )
-                          </div>
-                        )}
-                      </Link>
-                      <div>{book.story_details.story_cat}</div>
-                      <BookImg
-                        story_cover={book.story_details.story_cover}
-                        story_title={book.story_details.story_title}
-                        story_url={book.story_details.story_url}
-                        story_id={book._id}
-                        size={140}
-                      />
-                    </div>
-                  )
-                );
-              })}
-          </div>
-          <div className="categoryContainer">
-            <h4>Autre</h4>
-            {data &&
-              data[8] &&
-              data[8].count > 0 &&
-              data[8].writersRegistered.map((book, index) => {
-                return (
-                  book.story_details.story_cat === "Autre" && (
-                    <div
-                      key={index}
-                      className="book2"
-                      style={{ height: "240px", textAlign: "center" }}
-                    >
-                      <Link className="writer2">
-                        <div>
-                          {book.writer.writer_details.username.slice(0, 10)}
-                          {book.writer.writer_details.username.slice(10) &&
-                            "..."}
-                        </div>
-                        {book.writer.writer_details.discord && (
-                          <div>
-                            ({book.writer.writer_details.discord.slice(0, 10)}
-                            {book.writer.writer_details.discord.slice(10) &&
-                              "..."}
-                            )
-                          </div>
-                        )}
-                      </Link>
-                      <div>{book.story_details.story_cat}</div>
-                      <BookImg
-                        story_cover={book.story_details.story_cover}
-                        story_title={book.story_details.story_title}
-                        story_url={book.story_details.story_url}
-                        story_id={book._id}
-                        size={140}
-                      />
-                    </div>
-                  )
-                );
-              })}
-          </div>
 
-          {data && data[8] && data[8].count === 0 && (
-            <div>Aucun inscrit pour l'échange d'avis</div>
-          )}
-        </div>
-      </div>
-      <div className="bloc2">
-        <h3>
-          Résultats du tirage d'échanges d'avis :{" "}
-          {data[6] && data[6].echange[0]
-            ? data[6].echange[0].draw.length
-            : "0 "}
-          participants
-        </h3>
-        <div className="bookContainerWrap">
+        <div className="categoryContainer">
+          <h4>Imaginaire</h4>
           {data &&
-            data[6] &&
-            data[6].echange &&
-            data[6].echange[0] &&
-            data[6].echange[0].draw.map((book, index) => {
-              console.log("BOOK", book);
+            data[8] &&
+            data[8].count > 0 &&
+            data[8].writersRegistered.map((book, index) => {
               return (
-                <div key={index} className="exchange-datas">
-                  <div>
-                    <div>Catégorie : {book.book.story_details.story_cat}</div>
-                    <div>
-                      Lecteur :{" "}
-                      <Link
-                        className="writer2"
-                        style={{ fontSize: "15px" }}
-                        to={`/writer/${book.reviewer._id}`}
-                      >
-                        {book.reviewer.writer_details.username.slice(0, 15)}{" "}
-                        {book.reviewer.writer_details.username.slice(16) &&
-                          "..."}
-                        {book.reviewer.writer_details.discord &&
-                          `(${book.reviewer.writer_details.discord.slice(
-                            0,
-                            15
-                          )}${
-                            book.reviewer.writer_details.discord.slice(16) &&
-                            "..."
-                          })`}
-                      </Link>
-                    </div>
-                    <div>
-                      Auteur :{" "}
-                      <Link
-                        className="writer2"
-                        style={{ fontSize: "15px" }}
-                        to={`/writer/${book.writer._id}`}
-                      >
-                        {book.writer.writer_details.username.slice(0, 15)}{" "}
-                        {book.writer.writer_details.username.slice(16) && "..."}
-                        {book.writer.writer_details.discord &&
-                          `(${book.writer.writer_details.discord.slice(0, 15)}${
-                            book.writer.writer_details.discord.slice(16) &&
-                            "..."
-                          })`}
-                      </Link>
-                    </div>
-                    <div>
-                      Avis :{" "}
-                      {book.review &&
-                        (book.review.status === "sent"
-                          ? "Envoyé à l'auteur"
-                          : book.review.status === "approuved"
-                          ? "Validé par l'auteur"
-                          : book.review.status === "contested"
-                          ? "Contesté par l'auteur"
-                          : book.review.status === "null" &&
-                            "Annulé par un admin")}
-                      {!book.review && "Pas encore envoyé"}
-                    </div>
+                book.story_details.story_cat === "Imaginaire" && (
+                  <div
+                    key={index}
+                    className="book2"
+                    style={{ height: "240px", textAlign: "center" }}
+                  >
+                    <Link className="writer2">
+                      {book.writer.writer_details.discord && (
+                        <div>
+                          {book.writer.writer_details.discord.slice(0, 10)}
+                          {book.writer.writer_details.discord.slice(10) &&
+                            "..."}
+                        </div>
+                      )}
+                    </Link>
+                    <BookImg
+                      story_cover={book.story_details.story_cover}
+                      story_title={book.story_details.story_title}
+                      story_url={book.story_details.story_url}
+                      story_id={book._id}
+                      size={140}
+                    />
                   </div>
-                  <BookImg
-                    className="bookImg"
-                    story_cover={book.book.story_details.story_cover}
-                    story_title={book.book.story_details.story_title}
-                    story_url={book.book.story_details.story_url}
-                    story_id={book.book._id}
-                    size={130}
-                  />
-                </div>
+                )
               );
             })}
-          {data && !data[6] && <div>Aucun échange en cours</div>}
         </div>
-      </div>
+
+        <div className="categoryContainer">
+          <h4>Autre</h4>
+          {data &&
+            data[8] &&
+            data[8].count > 0 &&
+            data[8].writersRegistered.map((book, index) => {
+              return (
+                book.story_details.story_cat === "Autre" && (
+                  <div
+                    key={index}
+                    className="book2"
+                    style={{ height: "240px", textAlign: "center" }}
+                  >
+                    <Link className="writer2">
+                      {book.writer.writer_details.discord && (
+                        <div>
+                          {book.writer.writer_details.discord.slice(0, 10)}
+                          {book.writer.writer_details.discord.slice(10) &&
+                            "..."}
+                        </div>
+                      )}
+                    </Link>
+                    <BookImg
+                      story_cover={book.story_details.story_cover}
+                      story_title={book.story_details.story_title}
+                      story_url={book.story_details.story_url}
+                      story_id={book._id}
+                      size={140}
+                    />
+                  </div>
+                )
+              );
+            })}
+        </div>
+      </section>
     </main>
   );
 }

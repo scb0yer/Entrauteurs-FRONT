@@ -1,3 +1,172 @@
+.adminpage > section {
+  border: 1px white solid;
+  position: relative;
+  padding-bottom: 15px;
+}
+.adminpage > section > h2 {
+  position: absolute;
+  top: -15px;
+  left: 50px;
+  background-color: #1c2230;
+  width: 300px;
+  text-align: center;
+}
+.adminpage > section > h3 {
+  padding: 30px 20px 0px 20px;
+}
+.adminpage > section > div {
+  padding: 20px;
+}
+.adminpage .containers {
+  flex: 1;
+  gap: 20px;
+  display: flex;
+  overflow-x: scroll;
+}
+
+.adminpage .writer {
+  border: 1px white dashed;
+  margin-top: 5px;
+  padding: 10px;
+  height: 80px;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.adminpage .writer > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.adminpage .writer > div > a {
+  border: 1px white solid;
+  border-radius: 25px;
+  height: 35px;
+  width: 200px;
+  font-family: "Mansalva", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 21px;
+  padding: 6px;
+  text-align: center;
+  transition: 0.5;
+}
+.adminpage .writer > div > a:hover {
+  color: #1f2231;
+  background-color: white;
+}
+
+.adminpage .check {
+  padding: 4px;
+  border: 1px white solid;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  text-align: center;
+  transition: 0.5;
+}
+
+.adminpage .yes:hover {
+  background-color: #055d28;
+}
+.adminpage .no:hover {
+  background-color: #991313;
+}
+
+.adminpage .book {
+  padding: 5px;
+  height: 235px;
+  width: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.adminpage .book > div:last-child {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.adminpage > section .concours {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+.adminpage > section .booklist {
+  padding-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-evenly;
+}
+.adminpage > section .categoryContainer > h4 {
+  position: absolute;
+  top: -10px;
+}
+.adminpage .categoryContainer {
+  position: relative;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 5px;
+  border-bottom: white 1px dashed;
+  border-top: white 1px dashed;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  height: 200px;
+}
+.adminpage .noReviewsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  overflow-x: scroll;
+}
+.adminpage .noReview {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.contestation_details .btn-contestation .validate-review:hover {
+  background-color: #055d28;
+  color: white;
+}
+.contestation_details .btn-contestation .cancel-review:hover {
+  background-color: #991313;
+  color: white;
+}
+.contestation_details .btn-contestation .pending-contestation:hover {
+  background-color: #bc8400;
+  color: white;
+}
+.adminpage .send-stickers {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.adminpage .send-stickers > img {
+  width: 100px;
+}
+.adminpage .stickers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.adminpage .stickers > img {
+  width: 20%;
+}
+
+.adminpage .btn-exchange {
+  padding-right: 50px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ---------------------ANCIEN CODE */
 .adminpage .bloc1 {
   display: flex;
 }
@@ -14,24 +183,7 @@
   padding: 10px;
   overflow-y: scroll;
 }
-.adminpage .bloc1 .left-col .send-stickers {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-.adminpage .bloc1 .left-col .send-stickers > img {
-  width: 100px;
-}
-.adminpage .bloc1 .left-col .stickers {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-.adminpage .bloc1 .left-col .stickers > img {
-  width: 20%;
-}
+
 .adminpage .bloc1 .right-col {
   flex: 1;
   gap: 30px;
@@ -41,72 +193,15 @@
   height: 540px;
 }
 
-.adminpage .explication {
+/* .adminpage .explication {
   position: absolute;
   top: -10px;
   right: 0;
   font-size: 15px;
   color: rgb(126, 126, 126);
-}
+} */
 
-.adminpage .containers {
-  flex: 1;
-  gap: 20px;
-  display: flex;
-  overflow-x: scroll;
-}
-.adminpage .writer {
-  border: 1px white dashed;
-  padding: 5px;
-  height: 40px;
-  width: 250px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.adminpage .writer > a {
-  border: 1px white solid;
-  border-radius: 25px;
-  height: 35px;
-  width: 200px;
-  font-family: "Mansalva", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 21px;
-  padding: 6px;
-  text-align: center;
-  transition: 0.5;
-}
-.adminpage .writer > a:hover {
-  color: #1f2231;
-  background-color: white;
-}
-
-.adminpage .writer > div:last-child {
-  padding: 4px;
-  border: 1px white solid;
-  border-radius: 50%;
-  height: 35px;
-  width: 35px;
-  text-align: center;
-  transition: 0.5;
-}
-
-.adminpage .writer > div:last-child:hover {
-  background-color: #055d28;
-}
-
-.adminpage .book {
-  padding: 5px;
-  height: 235px;
-  width: 130px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-.adminpage .book div:last-child {
+/* .adminpage .book div:last-child {
   padding: 4px;
   border: 1px white solid;
   border-radius: 50%;
@@ -118,7 +213,7 @@
 
 .adminpage .book > div:last-child:hover {
   background-color: #055d28;
-}
+} */
 
 .adminpage .bloc2 {
   border-top: 1px solid white;
@@ -132,12 +227,7 @@
   font-size: 19px;
   white-space: nowrap;
 }
-.adminpage .bloc2 .bookContainer {
-  width: 100%;
-  display: flex;
-  gap: 30px;
-  overflow-x: scroll;
-}
+
 .adminpage .bloc2 .bookContainerWrap {
   width: 100%;
   display: flex;
@@ -217,19 +307,6 @@
   justify-content: space-evenly;
 }
 
-.contestation_details .btn-contestation .validate-review:hover {
-  background-color: #055d28;
-  color: white;
-}
-.contestation_details .btn-contestation .cancel-review:hover {
-  background-color: #991313;
-  color: white;
-}
-.contestation_details .btn-contestation .pending-contestation:hover {
-  background-color: #bc8400;
-  color: white;
-}
-
 .adminpage .bloc2 .icon {
   padding: 4px;
   border: 1px white solid;
@@ -250,13 +327,6 @@
   background-color: #991313;
 }
 
-.adminpage .bloc2 .categoryContainer {
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 20px;
-  border-bottom: white 1px dashed;
-  overflow-x: scroll;
-}
 .adminpage .bloc2 .categoryContainer > h4 {
   width: 120px;
 }
