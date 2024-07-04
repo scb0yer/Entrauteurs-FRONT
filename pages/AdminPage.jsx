@@ -601,14 +601,14 @@ export default function AdminPage({ token, isAdmin }) {
                   <div key={index} className="book2">
                     <div className="writer2">{author.username}</div>
                     <BookImg
-                      story_cover={author.story_details.story_cover}
-                      story_title={author.story_details.story_title}
-                      story_url={author.story_details.story_url}
+                      story_cover={author.story_cover}
+                      story_title={author.story_title}
+                      story_url={author.story_url}
                       size={150}
                     />
                     <div className="icons">
                       <FontAwesomeIcon
-                        className="icon to-validate"
+                        className="check yes icon to-validate"
                         icon="check"
                         size="xl"
                         onClick={() => {
@@ -616,7 +616,7 @@ export default function AdminPage({ token, isAdmin }) {
                         }}
                       />
                       <FontAwesomeIcon
-                        className="icon to-dissmiss"
+                        className="check no icon to-dissmiss"
                         icon="xmark"
                         size="xl"
                         onClick={() => {
