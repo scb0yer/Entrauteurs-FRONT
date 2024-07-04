@@ -599,7 +599,7 @@ export default function AdminPage({ token, isAdmin }) {
               return (
                 author.status === "Pending" && (
                   <div key={index} className="book2">
-                    <div className="writer2">{author.account.username}</div>
+                    <div className="writer2">{author.username}</div>
                     <BookImg
                       story_cover={author.story_details.story_cover}
                       story_title={author.story_details.story_title}
