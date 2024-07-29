@@ -414,7 +414,7 @@ export default function AdminPage({ token, isAdmin }) {
         )}
       </div>
       <section className="section">
-        <h2>Section gérée par Laura</h2>
+        <h2>Section gérée par Patricia</h2>
         <h3>👋 Nouveaux inscrits</h3>
         <div>
           <p>
